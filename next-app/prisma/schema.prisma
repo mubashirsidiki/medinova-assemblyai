@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
+}
+
+model Organization {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  timezone    String   @default("Europe/London")
+  industry    String   @default("Healthcare")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  teamMembers          TeamMember[]
+  authUsers            AuthUser[]
+  patients             Patient[]
+  callRecords          CallRecord[]
+  appointments         Appointment[]
+  notifications        Notification[]
+  usageEvents          UsageEvent[]
+  botSettings          BotSettings[]
+}
+
+model TeamMember {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId  String   @db.ObjectId
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  name           String
+  role           String
+  shift          String
+  status         String   @default("online")
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  notifications  Notification[] @relation("NotificationTeamMember")
+  appointments   Appointment[]   @relation("AppointmentProvider")
+  urgentBotSettings BotSettings[] @relation("BotUrgentTeamMember")
+}
+
+model AuthUser {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  email          String   @unique
+  displayName    String
+  role           String
+  passwordHash   String
+  passwordSalt   String
+  defaultRoute   String
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, role])
+
+  botSettings    BotSettings[]
+}
+
+model Patient {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId      String   @db.ObjectId
+  organization        Organization @relation(fields: [organizationId], references: [id])
+  name                String
+  preferredLanguage   String   @default("English")
+  riskLevel           String   @default("standard")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  calls               CallRecord[]
+  appointments        Appointment[]
+  notifications       Notification[]
+}
+
+model CallRecord {
+  id                      String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId          String   @db.ObjectId
+  organization            Organization @relation(fields: [organizationId], references: [id])
+  patientId               String?  @db.ObjectId
+  patient                 Patient? @relation(fields: [patientId], references: [id])
+  callerName              String
+  callerPhone             String?
+  callerLanguage          String   @default("English")
+  intent                  String
+  isSpam                  String   @default("NOT_SURE")
+  urgency                 String   @default("LOW")
+  callbackRequired        String   @default("NOT_SURE")
+  callbackRequiredReason  String   @default("")
+  recommendedDepartment   String   @default("")
+  appointmentDate         String?
+  appointmentTime         String?
+  recommendedNextSteps    Json?
+  transcript              String?
+  channel                 String   @default("voice")
+  startedAt               DateTime
+  endedAt                 DateTime?
+  durationSeconds         Int      @default(0)
+  latencyMs               Int      @default(0)
+  costUsd                 Float    @default(0)
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([startedAt])
+  @@index([isSpam])
+  @@index([urgency])
+}
+
+model Appointment {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId    String   @db.ObjectId
+  organization      Organization @relation(fields: [organizationId], references: [id])
+  patientId         String   @db.ObjectId
+  patient           Patient  @relation(fields: [patientId], references: [id])
+  providerId        String?  @db.ObjectId
+  provider          TeamMember? @relation("AppointmentProvider", fields: [providerId], references: [id])
+  department        String
+  status            String   @default("scheduled")
+  channel           String   @default("voice")
+  scheduledAt       DateTime
+  durationMinutes   Int      @default(30)
+  confirmationSent  Boolean  @default(false)
+  calendarSynced    Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  notifications     Notification[]
+
+  @@index([organizationId])
+  @@index([scheduledAt])
+}
+
+model Notification {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId    String   @db.ObjectId
+  organization      Organization @relation(fields: [organizationId], references: [id])
+  patientId         String?  @db.ObjectId
+  patient           Patient? @relation(fields: [patientId], references: [id])
+  teamMemberId      String?  @db.ObjectId
+  teamMember        TeamMember? @relation("NotificationTeamMember", fields: [teamMemberId], references: [id])
+  appointmentId     String?  @db.ObjectId
+  appointment       Appointment? @relation(fields: [appointmentId], references: [id])
+  kind              String
+  channel           String
+  title             String
+  body              String
+  status            String   @default("unread")
+  scheduledAt       DateTime?
+  readAt            DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([status])
+}
+
+model UsageEvent {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId String   @db.ObjectId
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  source         String
+  minutes        Float    @default(0)
+  costUsd        Float    @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId])
+  @@index([createdAt])
+}
+
+model BotSettings {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  organizationId         String   @db.ObjectId
+  organization           Organization @relation(fields: [organizationId], references: [id])
+  ownerUserId            String   @db.ObjectId
+  ownerUser              AuthUser @relation(fields: [ownerUserId], references: [id])
+  botName                String   @default("Medinova Assistant")
+  language               String   @default("English")
+  accent                 String   @default("British")
+  voiceModelName         String   @default("Clarity v1")
+  instructions           String   @default("You are a friendly and professional healthcare assistant for Medinova. Speak naturally and keep your responses clear and helpful. Ask only what's needed, guide the user step by step, and avoid unnecessary or off-topic conversation. Be polite, calm, and supportive, so the interaction feels like a real human conversation.")
+  crmSyncEnabled         Boolean  @default(true)
+  calendarSyncEnabled    Boolean  @default(true)
+  notifyTargetType       String   @default("team_member")
+  urgentTeamMemberId     String?  @db.ObjectId
+  urgentTeamMember       TeamMember? @relation("BotUrgentTeamMember", fields: [urgentTeamMemberId], references: [id])
+  contactName            String?   @default("Amelia Clarke")
+  contactEmail           String?   @default("amelia.clarke@medinova.co.uk")
+  emailTemplate          String   @default("Hi,\nAn urgent call has been flagged for {{caller_name}}. Please review and follow up as soon as possible.\n\nRegards,\n{{your_name}}")
+  smsTemplate            String   @default("Hi,\nAn urgent call has been flagged for {{caller_name}}. Please review and follow up as soon as possible.\n\nRegards,\n{{your_name}}")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  liveNumbers            BotLiveNumber[]
+
+  @@unique([organizationId, ownerUserId])
+  @@index([organizationId])
+}
+
+model BotLiveNumber {
+  id                           String   @id @default(auto()) @map("_id") @db.ObjectId
+  botSettingsId                String   @db.ObjectId
+  botSettings                  BotSettings @relation(fields: [botSettingsId], references: [id])
+  phoneNumber                  String
+  status                       String   @default("active")
+  assignedWorkflowOrDepartment String
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+
+  @@index([botSettingsId])
+}
+
+model VoiceModel {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  tone        String
+  accent      String
+  language    String   @default("British English")
+  gender      String
+  sampleAudio String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

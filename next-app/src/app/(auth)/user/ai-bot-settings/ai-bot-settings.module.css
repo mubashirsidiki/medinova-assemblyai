@@ -1,0 +1,363 @@
+/* ---- scenario list ---- */
+
+.scenarioList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: relative;
+	z-index: 1;
+}
+
+.scenarioLabelRow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.scenarioLabelRow label {
+	font-weight: 600;
+	font-size: 0.9rem;
+	color: var(--text);
+}
+
+.infoBadge {
+	position: relative;
+	display: inline-flex;
+	color: var(--muted);
+	cursor: help;
+}
+
+.infoBadge:hover {
+	color: var(--blue);
+}
+
+.infoTooltipPortal {
+	position: fixed;
+	transform: translate(-50%, -100%);
+	background: var(--text, #1a1a2e);
+	color: #fff;
+	font-size: 0.74rem;
+	line-height: 1.25;
+	padding: 5px 10px;
+	border-radius: 6px;
+	width: max-content;
+	max-width: 440px;
+	z-index: 9999;
+	pointer-events: none;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.infoBadge:hover .infoTooltip {
+	display: block;
+}
+
+.scenarioCards {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.scenarioCard {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	border: 1px solid var(--line-2);
+	border-radius: 10px;
+	background: var(--surface-2);
+	padding: 6px 8px 6px 12px;
+	transition: border-color 160ms;
+}
+
+.scenarioCard:focus-within {
+	border-color: var(--blue);
+	box-shadow: 0 0 0 3px rgba(59, 108, 255, 0.08);
+}
+
+.scenarioInput {
+	flex: 1;
+	border: none;
+	background: transparent;
+	padding: 6px 0;
+	font-size: 0.88rem;
+	outline: none;
+	color: var(--text);
+}
+
+.scenarioInput::placeholder {
+	color: var(--muted);
+}
+
+.scenarioRemove {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border: none;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--muted);
+	cursor: pointer;
+	flex: 0 0 auto;
+	transition:
+		background 140ms,
+		color 140ms;
+}
+
+.scenarioRemove:hover {
+	background: rgba(220, 38, 38, 0.1);
+	color: #dc2626;
+}
+
+.scenarioAdd {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	border: 1px dashed var(--line-2);
+	border-radius: 10px;
+	background: transparent;
+	padding: 10px 14px;
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--blue);
+	cursor: pointer;
+	transition:
+		background 140ms,
+		border-color 140ms;
+	align-self: flex-start;
+}
+
+.scenarioAdd:hover {
+	background: rgba(59, 108, 255, 0.06);
+	border-color: var(--blue);
+}
+
+/* ---- voice model selector ---- */
+
+.voiceModelTrigger {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	border: 1px solid var(--line-2);
+	background: #fff;
+	border-radius: 12px;
+	padding: 11px 12px;
+	cursor: pointer;
+	text-align: left;
+	color: var(--text);
+}
+
+.voiceModelTrigger:hover {
+	border-color: var(--blue);
+}
+
+.voiceModelTriggerName {
+	font-weight: 600;
+	font-size: 0.92rem;
+}
+
+.voiceModelTriggerAccent {
+	color: var(--muted);
+	font-size: 0.78rem;
+	margin-right: auto;
+}
+
+.voiceModelTrigger svg {
+	color: var(--muted);
+	flex: 0 0 auto;
+}
+
+.voiceModelDetails {
+	display: grid;
+	gap: 6px;
+	border: 1px solid var(--line-2);
+	border-radius: 12px;
+	padding: 10px 12px;
+	background: var(--surface-2);
+	margin-top: 8px;
+}
+
+.voiceModelTraits {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 6px;
+}
+
+.voiceModelStat {
+	display: grid;
+	gap: 2px;
+}
+
+.voiceModelLabel {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: var(--muted);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.voiceModelStat span:last-child {
+	font-size: 0.84rem;
+	color: var(--text);
+}
+
+.voiceModelAudioRow {
+	display: grid;
+	gap: 3px;
+}
+
+/* voice modal */
+
+.voiceModalBackdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(20, 25, 38, 0.5);
+	backdrop-filter: blur(4px);
+	z-index: 60;
+	display: grid;
+	place-items: center;
+	padding: 16px;
+}
+
+.voiceModal {
+	width: min(560px, 100%);
+	background: #fff;
+	border-radius: 18px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+	overflow: hidden;
+	display: grid;
+	gap: 0;
+}
+
+.voiceModalHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 18px 0;
+}
+
+.voiceModalHead h4 {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.voiceModalClose {
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--line-2);
+	background: #fff;
+	border-radius: 10px;
+	display: grid;
+	place-items: center;
+	cursor: pointer;
+	color: var(--muted);
+}
+
+.voiceModalList {
+	display: grid;
+	gap: 10px;
+	padding: 14px 18px 18px;
+	overflow-y: auto;
+	max-height: 70vh;
+}
+
+.voiceModelCard {
+	width: 100%;
+	text-align: left;
+	border: 1px solid var(--line-2);
+	border-radius: 14px;
+	padding: 14px;
+	background: var(--surface-2);
+	cursor: pointer;
+	display: grid;
+	gap: 8px;
+}
+
+.voiceModelCard:hover {
+	border-color: var(--blue-2);
+}
+
+.voiceModelCard.active {
+	border-color: var(--blue);
+	background: rgba(59, 108, 255, 0.06);
+}
+
+.voiceModelCardTop {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.voiceModelCardTop strong {
+	font-size: 1rem;
+}
+
+.voiceModelCheck {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #fff;
+	background: var(--blue);
+	padding: 3px 8px;
+	border-radius: 999px;
+}
+
+.voiceModelCardTraits {
+	display: grid;
+	gap: 3px;
+}
+
+.voiceModelCardTraits span {
+	font-size: 0.82rem;
+	color: var(--text);
+}
+
+.voiceModelCardTraits mark {
+	color: var(--muted);
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	background: transparent;
+	margin-right: 4px;
+}
+
+@media (max-width: 960px) {
+	.voiceModelTraits {
+		grid-template-columns: 1fr;
+	}
+
+	.aiBotSettingsPage {
+		gap: 12px;
+	}
+}
+
+@media (max-width: 600px) {
+	.aiBotSettingsPage :global(.route-head) p {
+		font-size: 0.8rem;
+	}
+
+	.aiBotSettingsPage :global(.card-pad) {
+		padding: 12px 14px;
+	}
+
+	.aiBotSettingsPage :global(.role-switch) {
+		gap: 10px;
+	}
+
+	.aiBotSettingsPage :global(.role-option) {
+		padding: 12px 14px;
+		flex-wrap: wrap;
+	}
+
+	.integration-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.integration-icons {
+		margin-left: 0;
+	}
+}

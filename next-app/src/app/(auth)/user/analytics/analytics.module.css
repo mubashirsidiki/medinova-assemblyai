@@ -1,0 +1,260 @@
+/* ---- analytics page compact ---- */
+
+.analyticsPage {
+	height: auto;
+	min-height: 100%;
+	grid-template-rows: auto auto auto auto;
+	gap: 10px;
+	overflow: visible;
+}
+
+.analyticsPage :global(.route-head) {
+	margin-bottom: 6px;
+}
+
+.analyticsPage :global(.route-head) p {
+	margin-top: 2px;
+}
+
+.analyticsPage :global(.card-pad) {
+	padding: 12px 14px;
+}
+
+.analyticsPage :global(.card-head) {
+	margin-bottom: 20px;
+}
+
+.analyticsPage > :global(.grid-2):first-of-type {
+	min-height: 0;
+}
+
+.analyticsPage > :global(.grid-2):first-of-type > :global(.card) {
+	min-height: 280px;
+	display: flex;
+	flex-direction: column;
+}
+
+.analyticsPage :global(.list) {
+	gap: 6px;
+}
+
+.analyticsPage :global(.chart-insight) {
+	margin: 6px 0 0;
+	font-size: 0.78rem;
+	line-height: 1.3;
+}
+
+/* trend card */
+
+.analyticsTrendCard {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	align-self: stretch;
+	grid-template-rows: auto 1fr auto;
+}
+
+.analyticsTrendCard .analyticsTrendChart {
+	height: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+.analyticsTrendCard .analyticsKpis {
+	flex-shrink: 0;
+}
+
+.analyticsTrendCard :global(.chart-insight) {
+	flex-shrink: 0;
+}
+
+.analyticsTrendCard :global(.chart-legend) {
+	flex-shrink: 0;
+}
+
+.analyticsTrendChart {
+	height: 300px;
+}
+
+/* kpis */
+
+.analyticsKpis {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 10px;
+	margin-top: 4px;
+}
+
+@media (max-width: 960px) {
+	.analyticsKpis {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+.analyticsKpis {
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.analyticsKpi {
+	border: 1px solid var(--line-2);
+	background: #f9fbff;
+	border-radius: 12px;
+	padding: 10px 12px;
+	display: grid;
+	gap: 4px;
+}
+
+.analyticsKpi small {
+	color: var(--muted);
+	font-size: 0.74rem;
+}
+
+.analyticsKpi strong {
+	font-size: 1.05rem;
+	line-height: 1.1;
+}
+
+/* pie card */
+
+.analyticsPieCard {
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+}
+
+.analyticsPieCard .analyticsPieHead {
+	flex-shrink: 0;
+}
+
+.analyticsPieCard .analyticsPieOnly {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.analyticsPieCard .analyticsPieChart {
+	width: 100%;
+	max-width: 280px;
+	height: auto;
+	max-height: 100%;
+}
+
+.analyticsPieCard .analyticsPieLegend {
+	flex-shrink: 0;
+	padding-top: 4px;
+	margin-top: 4px;
+}
+
+.analyticsPieHead {
+	align-items: start;
+}
+
+.analyticsPieHead small {
+	text-align: right;
+	max-width: 200px;
+	line-height: 1.2;
+}
+
+.analyticsPieChart {
+	width: 100%;
+	max-width: 320px;
+	justify-self: center;
+	display: block;
+}
+
+.analyticsPieCenterLabel {
+	fill: #8f97a5;
+	font-size: 0.92rem;
+}
+
+.analyticsPieCenterValue {
+	fill: #2f353d;
+	font-size: 1.55rem;
+	font-weight: 700;
+}
+
+.analyticsPieLegend {
+	justify-content: flex-start;
+	margin-top: 2px;
+	margin-bottom: 0;
+}
+
+/* classifications */
+
+.classificationsKpiRow {
+	max-height: 300px;
+}
+
+.classificationsKpiRow > :global(.card) {
+	overflow: hidden;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.operationalKpisList {
+	overflow-y: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+.classificationsCard {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.classificationsList {
+	overflow-y: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+@media (max-width: 960px) {
+	.analyticsPage {
+		grid-template-rows: auto auto auto auto;
+		gap: 12px;
+	}
+
+	.analyticsPage > :global(.grid-2) {
+		grid-template-columns: 1fr;
+	}
+
+	.analyticsPage > :global(.grid-2) > :global(.card) {
+		min-height: 240px;
+	}
+
+	.analyticsPage > :global(.grid-2):last-of-type {
+		grid-template-columns: 1fr;
+	}
+
+	.classificationsKpiRow {
+		max-height: none;
+	}
+}
+
+@media (max-width: 600px) {
+	.analyticsPage :global(.route-head) {
+		margin-bottom: 8px;
+	}
+
+	.analyticsPage :global(.route-head) p {
+		font-size: 0.8rem;
+	}
+
+	.analyticsPage :global(.card-pad) {
+		padding: 12px 14px;
+	}
+
+	.analyticsTrendChart {
+		height: 240px;
+	}
+
+	.analyticsKpis {
+		grid-template-columns: 1fr;
+	}
+}

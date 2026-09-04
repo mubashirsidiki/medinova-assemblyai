@@ -1,0 +1,26 @@
+[project]
+name = "medinova-agent"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "livekit-agents[openai,silero]>=1.5.1",
+    "livekit-plugins-noise-cancellation>=0.2.5",
+    "python-dotenv>=1.2.1",
+    "pydantic>=2.12.5",
+    "pymongo>=4.12.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.3.1",
+    "mypy>=1.20.1",
+    "pytest>=8.4.0",
+    "pytest-asyncio>=1.2.0",
+    "ruff>=0.15.10",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff.lint]
+ignore = ["BLE001"]
