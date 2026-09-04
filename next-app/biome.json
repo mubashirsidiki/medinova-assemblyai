@@ -1,0 +1,31 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+	"files": {
+		"includes": ["src/**"]
+	},
+	"linter": {
+		"rules": {
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off",
+				"useMediaCaption": "off",
+				"noStaticElementInteractions": "off",
+				"noNoninteractiveElementInteractions": "off",
+				"noLabelWithoutControl": "off"
+			},
+			"correctness": {
+				"noUnusedImports": "warn",
+				"noUnusedVariables": "warn"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "off",
+				"noShadowRestrictedNames": "off"
+			}
+		}
+	},
+	"css": {
+		"linter": {
+			"enabled": false
+		}
+	}
+}

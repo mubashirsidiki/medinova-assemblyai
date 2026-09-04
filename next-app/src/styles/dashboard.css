@@ -1,0 +1,89 @@
+/* ---- shared dashboard components (admin + user) ---- */
+
+.admin-link-card {
+	display: grid;
+	gap: 6px;
+	transition:
+		border-color 0.18s ease,
+		transform 0.18s ease;
+}
+
+.admin-link-card:hover {
+	border-color: rgba(59, 108, 255, 0.28);
+	transform: translateY(-1px);
+}
+
+.admin-overview-grid {
+	align-items: stretch;
+}
+
+.admin-overview-card {
+	display: grid;
+	gap: 10px;
+	grid-template-rows: auto auto 1fr auto;
+}
+
+.admin-overview-hero {
+	align-items: stretch;
+}
+
+.admin-soft-stat {
+	display: grid;
+	gap: 6px;
+	background: linear-gradient(180deg, #ffffff, #fafcff);
+}
+
+.admin-soft-stat small {
+	color: var(--muted);
+	font-size: 0.78rem;
+}
+
+.admin-soft-stat strong {
+	font-size: 1.6rem;
+	letter-spacing: -0.02em;
+}
+
+.admin-soft-stat span {
+	color: var(--muted);
+	font-size: 0.86rem;
+}
+
+.admin-overview-clean {
+	align-items: stretch;
+}
+
+.admin-overview-clean-card {
+	display: grid;
+	gap: 12px;
+	grid-template-rows: auto 1fr auto;
+}
+
+.admin-overview-metrics {
+	display: grid;
+	gap: 8px;
+}
+
+.admin-overview-metric-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 10px 12px;
+	border: 1px solid var(--line-2);
+	border-radius: 12px;
+	background: var(--surface-2);
+}
+
+.admin-overview-metric-row span {
+	color: var(--muted);
+	font-size: 0.82rem;
+}
+
+.admin-overview-metric-row strong {
+	font-size: 0.95rem;
+	color: var(--text);
+}
+
+.admin-overview-btn {
+	justify-content: center;
+}

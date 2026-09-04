@@ -1,0 +1,93 @@
+/* ---- dashboard page compact ---- */
+
+.dashboardPage {
+	height: auto;
+	min-height: 100%;
+	grid-template-rows: auto auto auto auto;
+	gap: 10px;
+	overflow: visible;
+}
+
+.dashboardPage :global(.route-head) {
+	margin-bottom: 8px;
+}
+
+.dashboardPage :global(.route-head) p {
+	margin-top: 2px;
+	font-size: 0.84rem;
+}
+
+.dashboardPage :global(.card-head) {
+	margin-bottom: 6px;
+}
+
+.dashboardPage :global(.admin-overview-metrics) {
+	gap: 6px;
+}
+
+.dashboardPage :global(.admin-overview-metric-row) {
+	padding: 7px 10px;
+}
+
+.dashboardPage :global(.admin-soft-stat) {
+	padding: 12px 14px;
+	gap: 4px;
+}
+
+.dashboardPage :global(.admin-soft-stat) strong {
+	font-size: 1.45rem;
+}
+
+@media (max-width: 960px) {
+	.dashboardPage {
+		grid-template-rows: auto auto auto auto;
+		gap: 12px;
+	}
+
+	.dashboardPage :global(.admin-overview-hero) {
+		grid-template-columns: 1fr;
+	}
+
+	.dashboardPage :global(.admin-overview-clean) {
+		grid-template-columns: 1fr;
+	}
+
+	.dashboardPage :global(.admin-overview-metrics) {
+		gap: 8px;
+	}
+
+	.dashboardPage :global(.admin-overview-metric-row) {
+		padding: 10px 12px;
+	}
+
+	.dashboardPage :global(.admin-soft-stat) {
+		padding: 14px 16px;
+		gap: 6px;
+	}
+
+	.dashboardPage :global(.admin-soft-stat) strong {
+		font-size: 1.6rem;
+	}
+
+	.dashboardPage :global(.admin-soft-stat) span {
+		font-size: 0.82rem;
+	}
+
+	.dashboardPage :global(.admin-overview-clean-card) {
+		gap: 10px;
+	}
+}
+
+@media (max-width: 600px) {
+	.dashboardPage :global(.route-head) {
+		margin-bottom: 6px;
+	}
+
+	.dashboardPage :global(.route-head) p {
+		font-size: 0.8rem;
+	}
+
+	.dashboardPage :global(.admin-soft-stat) strong {
+		font-size: 1.4rem;
+	}
+}

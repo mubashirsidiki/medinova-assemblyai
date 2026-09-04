@@ -1,0 +1,275 @@
+/* ---- voice session (LiveKit) ---- */
+
+.voice-session-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	min-height: 200px;
+}
+
+/* welcome */
+.voice-welcome {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 8px;
+	padding: 20px 0;
+}
+
+.voice-welcome-icon {
+	color: var(--blue);
+	margin-bottom: 4px;
+}
+
+.voice-welcome-title {
+	font-weight: 600;
+	font-size: 1rem;
+	color: var(--text);
+}
+
+.voice-welcome-subtitle {
+	color: var(--muted);
+	font-size: 0.85rem;
+}
+
+.voice-start-btn {
+	margin-top: 8px;
+	min-width: 200px;
+}
+
+/* session (connected) */
+.voice-session {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.voice-session-status {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 0;
+}
+
+.voice-indicator {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--muted);
+	flex-shrink: 0;
+}
+
+.voice-indicator.speaking {
+	background: var(--green);
+	animation: voice-pulse 1s ease-in-out infinite;
+}
+
+.voice-indicator.listening {
+	background: var(--blue);
+	animation: voice-pulse 1.5s ease-in-out infinite;
+}
+
+.voice-indicator.thinking {
+	background: var(--yellow);
+	animation: voice-pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes voice-pulse {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.5;
+		transform: scale(1.3);
+	}
+}
+
+/* transcript (shared between session and post-call) */
+.voice-transcript {
+	max-height: 260px;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 10px;
+	border: 1px solid var(--line-2);
+	border-radius: 10px;
+	background: var(--surface-2);
+}
+
+.transcript-line {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	align-items: baseline;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	color: var(--text);
+}
+
+.transcript-line.agent {
+	color: var(--text);
+}
+
+.transcript-line.user {
+	color: var(--text);
+}
+
+.transcript-label {
+	font-weight: 600;
+	font-size: 0.78rem;
+	flex-shrink: 0;
+}
+
+.transcript-line.agent .transcript-label {
+	color: var(--blue);
+}
+
+.transcript-line.user .transcript-label {
+	color: #10b981;
+}
+
+.transcript-time {
+	font-size: 0.7rem;
+	color: var(--muted);
+	flex-shrink: 0;
+}
+
+.transcript-line p {
+	width: 100%;
+	margin: 0;
+}
+
+.voice-controls {
+	justify-content: center;
+}
+
+/* post-call */
+.voice-post-call {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding: 12px 0;
+}
+
+.voice-post-call-header {
+	text-align: center;
+}
+
+.voice-post-call-header h3 {
+	font-size: 1.1rem;
+	color: var(--text);
+	margin-bottom: 2px;
+}
+
+.voice-post-call-header p {
+	color: var(--muted);
+	font-size: 0.82rem;
+}
+
+.voice-post-call-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	width: 100%;
+	max-width: 420px;
+}
+
+.voice-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	border: 1px solid var(--line-2);
+	border-radius: 10px;
+	background: var(--surface-2);
+	padding: 12px 8px;
+}
+
+.voice-stat strong {
+	font-size: 1.2rem;
+	color: var(--text);
+}
+
+.voice-stat small {
+	font-size: 0.75rem;
+	color: var(--muted);
+}
+
+.voice-post-call-transcript {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.voice-post-call-transcript strong {
+	font-size: 0.82rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--muted);
+}
+
+/* chat input row */
+.voice-chat-input-row {
+	display: flex;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.voice-chat-input {
+	flex: 1;
+	padding: 8px 12px;
+	border: 1px solid var(--line-2);
+	border-radius: 8px;
+	background: var(--surface-2);
+	color: var(--text);
+	font-size: 0.85rem;
+	outline: none;
+	transition: border-color 0.15s;
+}
+
+.voice-chat-input:focus {
+	border-color: var(--blue);
+}
+
+.voice-chat-input:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.voice-chat-input::placeholder {
+	color: var(--muted);
+}
+
+.voice-chat-send {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--line-2);
+	border-radius: 8px;
+	background: var(--blue);
+	color: #fff;
+	cursor: pointer;
+	transition: opacity 0.15s;
+	flex-shrink: 0;
+}
+
+.voice-chat-send:hover:not(:disabled) {
+	opacity: 0.85;
+}
+
+.voice-chat-send:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}

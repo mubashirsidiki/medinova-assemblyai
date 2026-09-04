@@ -1,0 +1,225 @@
+/* ---- calls / costs shared table layout ---- */
+
+.wideTableWrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.wideTableWrap table {
+	min-width: 3200px;
+}
+
+.wideTableWrap th,
+.wideTableWrap td {
+	white-space: normal !important;
+	vertical-align: top;
+	line-height: 1.5;
+}
+
+.transcriptCell {
+	line-height: 1.5;
+}
+
+.stepsCell {
+	max-width: 220px;
+	line-height: 1.5;
+	white-space: normal !important;
+}
+
+@media (min-width: 961px) {
+	.callsPageStatic:global(.screen-grid) {
+		height: 100%;
+		min-height: 0;
+		overflow: hidden;
+		grid-template-rows: auto auto minmax(0, 1fr);
+	}
+
+	.callsPageStatic > :global(.card):global(.card-pad) {
+		height: 100%;
+		min-height: 0;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	}
+
+	.callsPageStatic :global(.table-wrap) {
+		min-height: 0;
+	}
+
+	.callsPageStatic :global(.table-wrap) table {
+		height: 100%;
+		border-collapse: collapse;
+	}
+
+	.callsPageStatic :global(.table-wrap) tbody {
+		display: table-row-group;
+		height: 100%;
+	}
+
+	.callsPageStatic :global(.table-wrap) tbody tr {
+		height: 1px;
+	}
+}
+
+@media (max-width: 960px) {
+	.callsPageStatic:global(.screen-grid) {
+		height: auto;
+		overflow: visible;
+		grid-template-rows: auto auto auto 1fr;
+		gap: 12px;
+	}
+
+	.callsPageStatic :global(.kpi-grid) {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 10px;
+	}
+
+	.callsPageStatic :global(.metric) {
+		padding: 14px 16px;
+		min-height: 80px;
+	}
+
+	.callsPageStatic :global(.metric) :global(.badge) {
+		width: 36px;
+		height: 36px;
+	}
+
+	.callsPageStatic :global(.metric) :global(h3) {
+		font-size: 0.75rem;
+	}
+
+	.callsPageStatic :global(.metric) :global(strong) {
+		font-size: 1.1rem;
+	}
+
+	.callsPageStatic > :global(.card):global(.card-pad) {
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.callsPageStatic :global(.table-wrap) {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.callsPageStatic :global(.table-wrap) table {
+		min-width: 600px;
+	}
+
+	.callsPageStatic :global(th),
+	.callsPageStatic :global(td) {
+		padding: 10px 12px;
+		font-size: 0.8rem;
+	}
+
+	.callsPageStatic :global(.route-head) p {
+		font-size: 0.8rem;
+	}
+}
+
+@media (max-width: 600px) {
+	.callsPageStatic :global(.kpi-grid) {
+		grid-template-columns: 1fr;
+	}
+
+	.callsPageStatic :global(.metric-detail) {
+		display: none;
+	}
+}
+
+/* ---- transcript modal ---- */
+
+.transcriptBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 6px 12px;
+	border: 1px solid var(--line-2);
+	background: #fff;
+	border-radius: 8px;
+	color: var(--blue);
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
+	white-space: nowrap;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease;
+}
+
+.transcriptBtn:hover {
+	background: rgba(59, 108, 255, 0.06);
+	border-color: var(--blue);
+}
+
+.transcriptModalBackdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(20, 25, 38, 0.42);
+	backdrop-filter: blur(3px);
+	z-index: 60;
+	display: grid;
+	place-items: center;
+	padding: 16px;
+}
+
+.transcriptModal {
+	width: min(720px, 100%);
+	max-height: 80vh;
+	background: #fff;
+	border-radius: 18px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.transcriptModalHead {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 18px;
+	border-bottom: 1px solid var(--line-2);
+	flex-shrink: 0;
+}
+
+.transcriptModalHead h4 {
+	margin: 0;
+	font-size: 1.1rem;
+}
+
+.transcriptModalClose {
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--line-2);
+	background: #fff;
+	border-radius: 10px;
+	display: grid;
+	place-items: center;
+	cursor: pointer;
+	color: var(--muted);
+	flex-shrink: 0;
+}
+
+.transcriptModalClose:hover {
+	background: var(--surface-2);
+}
+
+.transcriptModalBody {
+	padding: 18px;
+	overflow-y: auto;
+	flex: 1;
+	min-height: 0;
+}
+
+.transcriptText {
+	margin: 0;
+	font-family: inherit;
+	font-size: 0.92rem;
+	line-height: 1.7;
+	color: var(--text);
+	white-space: pre-wrap;
+	word-break: break-word;
+	overflow-wrap: break-word;
+}
