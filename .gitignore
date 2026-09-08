@@ -57,4 +57,7 @@ agent/
 
 docs/
 medinova-livekit-agent/tests/
+medinova-livekit-agent/.dockerignore
+medinova-livekit-agent/Dockerfile
+medinova-livekit-agent/livekit.toml
 

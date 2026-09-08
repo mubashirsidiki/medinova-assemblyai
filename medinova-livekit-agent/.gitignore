@@ -7,3 +7,6 @@ __pycache__/
 dist/
 build/
 .uv/
+.dockerignore
+Dockerfile
+livekit.toml
