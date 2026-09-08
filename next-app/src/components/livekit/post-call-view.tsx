@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { RotateCcw } from "lucide-react";
+import { useState } from "react";
 import type { TranscriptMessage } from "./transcription-collector";
 
 function formatDuration(ms: number): string {
@@ -23,7 +23,9 @@ export function PostCallView({
 }) {
 	const userMessages = transcript.filter((m) => m.isUser);
 	const agentMessages = transcript.filter((m) => !m.isUser);
-	const [callDuration] = useState(() => (callStartTime != null ? Date.now() - callStartTime : 0));
+	const [callDuration] = useState(() =>
+		callStartTime != null ? Date.now() - callStartTime : 0,
+	);
 
 	return (
 		<div className="voice-post-call">

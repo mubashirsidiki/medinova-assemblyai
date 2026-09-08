@@ -3,17 +3,33 @@ from datetime import UTC, datetime
 
 from bson import ObjectId
 from pymongo import MongoClient
+from pymongo.database import Database
 
+from constants import DEFAULT_MONGODB_DATABASE
 from core.logging.logger import LOG
 
 MONGODB_URI = os.getenv("MONGODB_URI", "")
 ORGANIZATION_ID = os.getenv("ORGANIZATION_ID", "")
+MONGODB_DB_NAME = os.getenv("MONGODB_DB_NAME", DEFAULT_MONGODB_DATABASE)
 
 LOG.info(f"MONGODB_URI set: {bool(MONGODB_URI)} (length={len(MONGODB_URI)})")
 LOG.info(f"ORGANIZATION_ID set: {bool(ORGANIZATION_ID)} (value={ORGANIZATION_ID})")
+LOG.info(f"MONGODB_DB_NAME set: {MONGODB_DB_NAME}")
 
 _client: MongoClient | None = MongoClient(MONGODB_URI) if MONGODB_URI else None
-_db = _client.get_database("health_voice_platform") if _client else None
+
+
+def _resolve_database(client: MongoClient) -> Database:
+    try:
+        default_db = client.get_default_database()
+        if default_db is not None:
+            return default_db
+    except Exception as e:
+        LOG.debug(f"No default database in MongoDB URI, using {MONGODB_DB_NAME}: {e}")
+    return client.get_database(MONGODB_DB_NAME)
+
+
+_db = _resolve_database(_client) if _client else None
 
 
 def fetch_agent_config() -> dict:

@@ -1,3 +1,5 @@
+from typing import Literal
+
 ASSISTANT_DEFAULT_INSTRUCTIONS = """
 You are a friendly and professional healthcare voice assistant for Medinova Health Network.
 Your role is to collect patient information and help route them to the right department.
@@ -103,3 +105,21 @@ OPENAI_MODEL = "gpt-realtime-1.5"
 OPENAI_VOICE = "marin"
 OPENAI_TEMPERATURE = 0.8
 CLASSIFICATION_MODEL = "openai/gpt-4.1-mini"
+
+# AssemblyAI STT configuration
+ASSEMBLYAI_STT_MODEL: Literal["universal-3-5-pro"] = "universal-3-5-pro"
+ASSEMBLYAI_MIN_TURN_SILENCE_MS = 100
+ASSEMBLYAI_MAX_TURN_SILENCE_MS = 1000
+ASSEMBLYAI_VAD_THRESHOLD = 0.3
+
+# Inworld TTS configuration
+INWORLD_TTS_MODEL = "inworld/inworld-tts-2-flash"
+INWORLD_TTS_VOICE = "Ashley"
+INWORLD_TTS_LANGUAGE = "en"
+
+# LLM Reasoning configuration
+CHAT_LLM_MODEL = "gpt-4o-mini"
+CHAT_LLM_TEMPERATURE = 0.6
+
+# MongoDB configuration
+DEFAULT_MONGODB_DATABASE = "medinova-assembly-ai"

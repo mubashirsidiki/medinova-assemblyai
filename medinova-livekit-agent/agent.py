@@ -15,25 +15,33 @@ from livekit.agents import (
     CloseEvent,
     ConversationItemAddedEvent,
     JobProcess,
+    TurnHandlingOptions,
     UserStateChangedEvent,
     inference,
     room_io,
 )
 from livekit.agents.beta import EndCallTool
 from livekit.plugins import (  # type: ignore[attr-defined]
+    assemblyai,
     noise_cancellation,
     openai,
     silero,
 )
 
 from constants import (
+    ASSEMBLYAI_MAX_TURN_SILENCE_MS,
+    ASSEMBLYAI_MIN_TURN_SILENCE_MS,
+    ASSEMBLYAI_STT_MODEL,
+    ASSEMBLYAI_VAD_THRESHOLD,
     ASSISTANT_DEFAULT_INSTRUCTIONS,
     CALL_CLASSIFICATION_PROMPT,
+    CHAT_LLM_MODEL,
+    CHAT_LLM_TEMPERATURE,
     CLASSIFICATION_MODEL,
     GENERATE_REPLY_INSTRUCTIONS,
-    OPENAI_MODEL,
-    OPENAI_TEMPERATURE,
-    OPENAI_VOICE,
+    INWORLD_TTS_LANGUAGE,
+    INWORLD_TTS_MODEL,
+    INWORLD_TTS_VOICE,
     USER_AWAY_GOODBYE_PROMPT,
     USER_AWAY_PROMPT,
     WAIT_FOR_USER_SECONDS,
@@ -54,6 +62,9 @@ LOG.info(f"JWT_SECRET set: {bool(JWT_SECRET)} (length={len(JWT_SECRET)})")
 
 
 def _notify_dashboard(classification: CallClassification):
+    if not DASHBOARD_URL:
+        LOG.info("DASHBOARD_URL not configured, skipping dashboard notification")
+        return
     if not JWT_SECRET:
         LOG.warning("JWT_SECRET not set, skipping notification")
         return
@@ -199,7 +210,9 @@ async def _user_presence_loop(session: AgentSession) -> None:
 
 
 def prewarm(proc: JobProcess):
-    proc.userdata["vad"] = silero.VAD.load()
+    proc.userdata["vad"] = silero.VAD.load(
+        activation_threshold=ASSEMBLYAI_VAD_THRESHOLD,
+    )
 
 
 server = AgentServer(initialize_process_timeout=60)
@@ -237,12 +250,26 @@ async def entrypoint(ctx: agents.JobContext):
     inactivity_task: asyncio.Task | None = None
 
     session: AgentSession = AgentSession(
-        llm=openai.realtime.RealtimeModel(
-            model=OPENAI_MODEL,
-            voice=OPENAI_VOICE,
-            temperature=OPENAI_TEMPERATURE,
+        stt=assemblyai.STT(
+            model=ASSEMBLYAI_STT_MODEL,
+            min_turn_silence=ASSEMBLYAI_MIN_TURN_SILENCE_MS,
+            max_turn_silence=ASSEMBLYAI_MAX_TURN_SILENCE_MS,
+            vad_threshold=ASSEMBLYAI_VAD_THRESHOLD,
+        ),
+        llm=openai.LLM(
+            model=CHAT_LLM_MODEL,
+            temperature=CHAT_LLM_TEMPERATURE,
+        ),
+        tts=inference.TTS(
+            model=INWORLD_TTS_MODEL,
+            voice=INWORLD_TTS_VOICE,
+            language=INWORLD_TTS_LANGUAGE,
         ),
         vad=ctx.proc.userdata["vad"],
+        turn_handling=TurnHandlingOptions(
+            turn_detection="stt",
+            endpointing={"min_delay": 0},
+        ),
         user_away_timeout=WAIT_FOR_USER_SECONDS,
     )
 

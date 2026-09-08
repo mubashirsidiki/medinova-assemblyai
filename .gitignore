@@ -48,7 +48,13 @@ lawlanesolicitors
 skills-lock.json
 
 .agents
+agent/
+
 
 .mypy_cache
 
 .ruff_cache
+
+docs/
+medinova-livekit-agent/tests/
+
