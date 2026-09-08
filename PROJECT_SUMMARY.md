@@ -2,7 +2,7 @@
 
 **Medinova Health Network** is an enterprise AI healthcare platform designed to automate patient phone intake, clinical triage, department routing, and appointment scheduling.
 
-Live Deployment: [inova-health.vercel.app](https://inova-health.vercel.app/)
+Live Deployment: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
 
 ---
 
@@ -29,10 +29,11 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 │    medinova-livekit-agent    │        │      next-app       │
 │  (Python LiveKit Worker)     │        │ (Next.js Dashboard) │
 │                              │        │                     │
-│  • OpenAI Realtime API       │        │ • Clinical Portal   │
-│  • Silero VAD                │        │ • Admin Controls    │
-│  • BVC Noise Cancellation    │        │ • In-Browser Lab    │
-│  • GPT-4.1-mini Triage       │        │ • Prisma ORM        │
+│  • AssemblyAI STT (U3.5 Pro) │        │ • Clinical Portal   │
+│  • OpenAI LLM (gpt-4o-mini)  │        │ • Admin Controls    │
+│  • Inworld TTS (2.0 Flash)   │        │ • In-Browser Lab    │
+│  • Silero VAD + BVC Audio    │        │ • Prisma ORM        │
+│  • GPT-4.1-mini Triage       │        │                     │
 └──────────────┬───────────────┘        └──────────┬──────────┘
                │                                   │
                │ Direct Writes & Webhooks          │ Queries
@@ -89,9 +90,12 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 - **Realtime**: `@livekit/components-react`, `livekit-server-sdk`
 
 ### Voice Worker (`medinova-livekit-agent`)
-- **Framework**: LiveKit Agents Python SDK `>=1.5.1`
-- **Voice Model**: OpenAI Realtime API (`gpt-realtime-1.5`, voice: `marin`)
-- **Speech Tools**: Silero VAD, BVC noise cancellation, LiveKit `EndCallTool`
+- **Framework**: LiveKit Agents Python SDK `>=1.5.1` (`livekit-agents[openai,silero,assemblyai]`)
+- **Speech-to-Text**: AssemblyAI Universal 3.5 Pro (`universal-3-5-pro`) with punctuation turn detection
+- **Reasoning (LLM)**: OpenAI `gpt-4o-mini`
+- **Text-to-Speech**: Inworld Realtime TTS 2.0 Flash (`inworld/inworld-tts-2-flash`, voice: `Ashley`)
+- **Speech Tools**: Silero VAD (`threshold=0.3`), BVC noise cancellation, LiveKit `EndCallTool`
+- **Database**: MongoDB Atlas (`medinova-assembly-ai`)
 - **Package Manager**: UV (`uv`)
 
 ---

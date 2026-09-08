@@ -1,28 +1,36 @@
-# 02. Speech & AI Realtime Pipeline
+# 02. Speech & AI Voice Pipeline
 
-## 1. End-to-End Realtime Architecture
-Unlike multi-stage pipelines (STT -> LLM -> TTS) which incur cumulative latency penalties (1.5s - 3s), Medinova utilizes the **OpenAI Realtime API** (`gpt-realtime-1.5`).
+## 1. Decoupled Modular Architecture
+Medinova utilizes a high-performance decoupled voice pipeline integrating specialized state-of-the-art models for speech recognition, reasoning, and speech synthesis:
 
-- Audio input streams directly to the model.
-- Audio output streams back in native speech chunks.
-- Enables natural conversational turn-taking, immediate interruptions, and sub-second latency.
+- **Speech-to-Text (STT)**: **AssemblyAI Universal 3.5 Pro** (`universal-3-5-pro`) streaming transcription.
+- **Reasoning (LLM)**: **OpenAI Chat Completions** (`gpt-4o-mini`).
+- **Text-to-Speech (TTS)**: **Inworld Realtime TTS 2.0 Flash** (`inworld/inworld-tts-2-flash`) via LiveKit Cloud Inference (~150ms first-chunk audio latency).
+- **Turn Detection**: STT punctuation-based turn detection (`turn_detection="stt"`, `endpointing.min_delay=0`).
+- **Voice Activity Detection**: Silero VAD (`activation_threshold=0.3`) matching AssemblyAI's internal VAD to prevent barge-in dead zones.
 
 ---
 
-## 2. Voice Model Configuration (`constants.py`)
+## 2. Voice Pipeline Configuration (`constants.py`)
 
 | Parameter | Value | Description |
 | :--- | :--- | :--- |
-| **`OPENAI_MODEL`** | `gpt-realtime-1.5` | Native audio-to-audio multimodal foundation model. |
-| **`OPENAI_VOICE`** | `marin` | Warm, clear, professional synthesized voice profile. |
-| **`OPENAI_TEMPERATURE`** | `0.8` | Balanced natural conversational inflection and clinical adherence. |
+| **`ASSEMBLYAI_STT_MODEL`** | `universal-3-5-pro` | AssemblyAI low-latency streaming STT foundation model. |
+| **`ASSEMBLYAI_MIN_TURN_SILENCE_MS`**| `100` | Minimum silence threshold before turn candidate evaluation. |
+| **`ASSEMBLYAI_MAX_TURN_SILENCE_MS`**| `1000`| Maximum silence threshold to prevent premature turn cutoffs. |
+| **`ASSEMBLYAI_VAD_THRESHOLD`** | `0.3` | Sensitivity threshold aligned with local Silero VAD. |
+| **`CHAT_LLM_MODEL`** | `gpt-4o-mini` | Fast conversational reasoning and clinical adherence. |
+| **`CHAT_LLM_TEMPERATURE`** | `0.6` | Deterministic clinical intake with natural conversational flow. |
+| **`INWORLD_TTS_MODEL`** | `inworld/inworld-tts-2-flash` | LiveKit Cloud inference ultra-low latency TTS engine. |
+| **`INWORLD_TTS_VOICE`** | `Ashley` | Clear, professional synthesized healthcare voice. |
+| **`INWORLD_TTS_LANGUAGE`** | `en` | Base synthesis language code. |
 
 ---
 
 ## 3. Voice Activity Detection (VAD) & Turn-Taking
-- **Library**: `livekit-plugins-silero` (`silero.VAD`)
-- Identifies when the caller begins and finishes speaking.
-- Allows interruptions: When the user speaks while the assistant is talking, playback stops immediately and the model attends to the user's interruption.
+- **Library**: `livekit-plugins-silero` (`silero.VAD.load(activation_threshold=0.3)`)
+- **Turn Detection**: `TurnHandlingOptions(turn_detection="stt", endpointing={"min_delay": 0})`
+- **Interruption (Barge-in)**: When caller speaks while assistant talks, audio playback stops immediately.
 
 ---
 

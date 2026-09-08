@@ -19,11 +19,13 @@
 ┌────────────────────────────────────────┐
 │       medinova-livekit-agent           │
 │  ┌──────────────────────────────────┐  │
-│  │ Silero VAD + BVC Noise Cancel    │  │
+│  │ Silero VAD (0.3) + BVC Noise     │  │
 │  └──────────────────┬───────────────┘  │
 │                     │                  │
 │  ┌──────────────────▼───────────────┐  │
-│  │ OpenAI Realtime API (Voice)      │  │
+│  │ AssemblyAI STT (U3.5 Pro)        │  │
+│  │ OpenAI LLM (gpt-4o-mini)         │  │
+│  │ Inworld TTS (2.0 Flash)          │  │
 │  └──────────────────┬───────────────┘  │
 │                     │                  │
 │  ┌──────────────────▼───────────────┐  │
@@ -46,10 +48,12 @@
 To achieve sub-second response times upon user connection, models are pre-loaded in the parent process:
 ```python
 def prewarm(proc: JobProcess):
-    proc.userdata["vad"] = silero.VAD.load()
+    proc.userdata["vad"] = silero.VAD.load(
+        activation_threshold=ASSEMBLYAI_VAD_THRESHOLD,
+    )
 ```
-- Silero Voice Activity Detection (VAD) is loaded once per process.
-- Avoids cold-start latency when a room dispatch arrives.
+- Silero Voice Activity Detection (VAD) is loaded once per process with `activation_threshold=0.3` matching AssemblyAI's internal VAD threshold.
+- Avoids cold-start latency and prevents barge-in dead zones.
 
 ---
 
@@ -70,8 +74,11 @@ def prewarm(proc: JobProcess):
 
 ### 3. Session Initialization
 - Instantiates `AgentSession`:
-  - LLM: `openai.realtime.RealtimeModel` (`model="gpt-realtime-1.5"`, `voice="marin"`, `temperature=0.8`).
-  - VAD: Prewarmed Silero instance.
+  - STT: `assemblyai.STT(model="universal-3-5-pro", min_turn_silence=100, max_turn_silence=1000, vad_threshold=0.3)`
+  - LLM: `openai.LLM(model="gpt-4o-mini", temperature=0.6)`
+  - TTS: `inference.TTS(model="inworld/inworld-tts-2-flash", voice="Ashley", language="en")`
+  - VAD: Prewarmed Silero instance (`threshold=0.3`)
+  - Turn Handling: `TurnHandlingOptions(turn_detection="stt", endpointing={"min_delay": 0})`
   - Inactivity Timeout: `WAIT_FOR_USER_SECONDS = 15`.
 - Starts room audio pipeline (`session.start(...)`):
   - `delete_room_on_close=True` (Destroys room when call terminates).

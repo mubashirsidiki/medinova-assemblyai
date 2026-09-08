@@ -10,7 +10,7 @@ The voice stack consists of two parts:
    - Receives post-call summaries and transcripts from the agent worker (`/api/livekit/notify`).
 2. **Backend Agent (`medinova-livekit-agent`)**:
    - Python LiveKit Agents SDK worker.
-   - Joins rooms, captures user audio, streams to Speech-to-Text (AssemblyAI / Deepgram), processes conversation with LLM, and streams back synthesized audio (Cartesia / ElevenLabs).
+   - Joins rooms, captures user audio, streams to AssemblyAI Universal 3.5 Pro STT, processes conversation with OpenAI gpt-4o-mini LLM, and streams back synthesized audio via Inworld TTS 2.0 Flash (LiveKit Cloud Inference).
 
 ---
 

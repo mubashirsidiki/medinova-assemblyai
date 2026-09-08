@@ -1,6 +1,6 @@
 # Medinova LiveKit Voice Agent — System Knowledge Base
 
-This directory contains persistent, comprehensive technical documentation for the `medinova-livekit-agent` Python service. It explains how the voice worker interfaces with LiveKit Cloud, streams audio with the OpenAI Realtime API, classifies patient calls, and syncs data with MongoDB and the Next.js clinical dashboard.
+This directory contains persistent, comprehensive technical documentation for the `medinova-livekit-agent` Python service. It explains how the voice worker interfaces with LiveKit Cloud, streams audio with AssemblyAI STT, OpenAI LLM, and Inworld TTS, classifies patient calls, and syncs data with MongoDB and the Next.js clinical dashboard.
 
 ---
 
@@ -9,7 +9,7 @@ This directory contains persistent, comprehensive technical documentation for th
 | File | Description |
 | :--- | :--- |
 | [**`01_AGENT_ARCHITECTURE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/01_AGENT_ARCHITECTURE.md) | LiveKit Agents SDK lifecycle, WebRTC worker session model, process prewarming, and SIP telephony support. |
-| [**`02_SPEECH_AND_AI_PIPELINE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/02_SPEECH_AND_AI_PIPELINE.md) | OpenAI Realtime speech pipeline (`gpt-realtime-1.5`), Silero VAD, BVC noise cancellation, and bilingual audio handling. |
+| [**`02_SPEECH_AND_AI_PIPELINE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/02_SPEECH_AND_AI_PIPELINE.md) | Decoupled voice pipeline (AssemblyAI STT, OpenAI LLM, Inworld TTS), Silero VAD, BVC noise cancellation, and bilingual handling. |
 | [**`03_CONVERSATIONAL_FLOW_AND_PROMPTS.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/03_CONVERSATIONAL_FLOW_AND_PROMPTS.md) | Healthcare intake protocol, department routing, emergency triage (999/112), inactivity watchdog, and call termination rules. |
 | [**`04_POST_CALL_CLASSIFICATION.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/04_POST_CALL_CLASSIFICATION.md) | Post-call analysis using GPT-4.1-mini, Pydantic schema (`CallClassification`), urgency ratings, spam detection, and extracted next steps. |
 | [**`05_INTEGRATION_AND_PERSISTENCE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/05_INTEGRATION_AND_PERSISTENCE.md) | Direct MongoDB persistence (`CallRecord`), dynamic `BotSettings` synchronization, and webhook notification to `next-app`. |
@@ -20,13 +20,15 @@ This directory contains persistent, comprehensive technical documentation for th
 ## Quick Reference
 
 ### 1. Technology Stack
-- **Framework**: LiveKit Agents Python SDK `>=1.5.1` (`livekit-agents[openai,silero]`)
+- **Framework**: LiveKit Agents Python SDK `>=1.5.1` (`livekit-agents[openai,silero,assemblyai]`)
 - **Package Manager**: UV (`uv`)
-- **Voice Realtime Model**: OpenAI Realtime API (`gpt-realtime-1.5`, voice: `marin`, temperature: `0.8`)
-- **VAD**: Silero VAD
+- **Speech-to-Text**: AssemblyAI Universal 3.5 Pro (`universal-3-5-pro`)
+- **Reasoning**: OpenAI Chat Completions (`gpt-4o-mini`)
+- **Text-to-Speech**: Inworld Realtime TTS 2.0 Flash (`inworld/inworld-tts-2-flash`, voice: `Ashley`)
+- **VAD**: Silero VAD (`activation_threshold=0.3`)
 - **Noise Suppression**: LiveKit Noise Cancellation (`BVC` for web, `BVCTelephony` for SIP)
 - **Classification Model**: OpenAI GPT-4.1-mini via LiveKit Inference
-- **Database**: MongoDB Atlas (`pymongo`)
+- **Database**: MongoDB Atlas (`medinova-assembly-ai`)
 - **Python Version**: `>=3.12`
 
 ### 2. Common Commands
@@ -49,12 +51,13 @@ lk agent logs --log-type=runtime
 
 ### 3. Required Environment Variables (`.env.local` / `.env`)
 ```env
-LIVEKIT_URL="wss://medinova-6ynzszog.livekit.cloud"
+LIVEKIT_URL="wss://assemblyai-txp4mw4u.livekit.cloud"
 LIVEKIT_API_KEY="AP..."
 LIVEKIT_API_SECRET="..."
 OPENAI_API_KEY="sk-..."
+ASSEMBLYAI_API_KEY="..."
 MONGODB_URI="mongodb+srv://..."
 ORGANIZATION_ID="<mongo_object_id>"
 JWT_SECRET="<shared_dashboard_auth_secret>"
-DASHBOARD_URL="https://medinova-health.vercel.app"
+DASHBOARD_URL="https://medinova-assemblyai.vercel.app"
 ```

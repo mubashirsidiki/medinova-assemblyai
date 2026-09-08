@@ -10,7 +10,7 @@ To ensure maximum reliability, post-call clinical data is synced via two distinc
 ## 2. Direct MongoDB Write (`core/database/__init__.py`)
 
 ### Prerequisites:
-- `MONGODB_URI`: Connection string pointing to the same MongoDB database used by the Next.js app (`health_voice_platform`).
+- `MONGODB_URI`: Connection string pointing to the same MongoDB database used by the Next.js app (`medinova-assembly-ai`).
 - `ORGANIZATION_ID`: Hex string ObjectId representing the tenant organization.
 
 ### Schema Alignment:
