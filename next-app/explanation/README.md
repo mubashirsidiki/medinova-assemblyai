@@ -9,7 +9,7 @@ This directory provides a persistent, complete technical blueprint of the `next-
 | File | Description |
 | :--- | :--- |
 | [**`01_ARCHITECTURE.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/01_ARCHITECTURE.md) | High-level system design, Next.js 16 App Router setup, directory map, styling, and motion config. |
-| [**`02_DATABASE_AND_MODELS.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/02_DATABASE_AND_MODELS.md) | MongoDB database layer, Prisma schemas, relationships, indexing, and seed records. |
+| [**`02_DATABASE_AND_MODELS.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/02_DATABASE_AND_MODELS.md) | MongoDB database layer, Prisma schemas, relationships, and indexing. |
 | [**`03_AUTHENTICATION_AND_ROLES.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/03_AUTHENTICATION_AND_ROLES.md) | Session cookies (`voicecare_session`), PBKDF2 password hashing, RBAC (`admin` vs `user`), and route protection proxy. |
 | [**`04_ROUTES_AND_PAGES.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/04_ROUTES_AND_PAGES.md) | Full route map: Public marketing/auth pages, User clinical portal, Admin operations portal, and API endpoints. |
 | [**`05_LIVEKIT_VOICE_INTEGRATION.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/05_LIVEKIT_VOICE_INTEGRATION.md) | WebRTC voice connection flow, LiveKit room token minting, agent webhook ingress, and browser test lab. |
@@ -37,16 +37,12 @@ npm run build
 # Push Prisma schema changes to MongoDB
 npm run db:push
 
-# Reset and seed database with healthcare demo data
-npm run db:seed
-
 # Launch Prisma Studio web GUI
 npm run db:studio
 ```
 
-### 3. Demo Accounts (From `prisma/seed.mjs`)
-- **Admin**: `marc_margulan@admin.medinova.de` / `MediNova#2026Admin` (Lands on `/admin/dashboard`)
-- **User**: `marc_margulan@user.medinova.de` / `MediNova#2026User` (Lands on `/user/dashboard`)
+### 3. User Accounts
+Accounts are configured directly in MongoDB or provisioned through administrative onboarding.
 
 ### 4. Required Environment Variables
 ```env

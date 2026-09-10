@@ -53,7 +53,7 @@ src/app/
 - Component: `src/components/login-form.tsx`
 - Features:
   - Supports manual email/password input.
-  - One-click demo credentials switcher between `admin` (`marc_margulan@admin.medinova.de`) and `user` (`marc_margulan@user.medinova.de`).
+  - Role-based sign in for `admin` and `user` accounts.
   - Calls `loginAction` server action.
 
 ---

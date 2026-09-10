@@ -51,7 +51,7 @@ lk agent logs --log-type=runtime
 
 ### 3. Required Environment Variables (`.env.local` / `.env`)
 ```env
-LIVEKIT_URL="wss://assemblyai-txp4mw4u.livekit.cloud"
+LIVEKIT_URL="wss://<subdomain>.livekit.cloud"
 LIVEKIT_API_KEY="AP..."
 LIVEKIT_API_SECRET="..."
 OPENAI_API_KEY="sk-..."
@@ -59,5 +59,5 @@ ASSEMBLYAI_API_KEY="..."
 MONGODB_URI="mongodb+srv://..."
 ORGANIZATION_ID="<mongo_object_id>"
 JWT_SECRET="<shared_dashboard_auth_secret>"
-DASHBOARD_URL="https://medinova-assemblyai.vercel.app"
+DASHBOARD_URL="https://<dashboard-domain>.vercel.app"
 ```

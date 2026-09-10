@@ -41,3 +41,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local database seed scripts and seed backups
+prisma/seed.mjs
+prisma/seed*.mjs*
+prisma/*.bak

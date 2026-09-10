@@ -17,8 +17,7 @@ The `next-app` serves as the frontend dashboard, management portal, and API serv
 ```
 next-app/
 ├── prisma/
-│   ├── schema.prisma        # MongoDB datasource and Prisma data models
-│   └── seed.mjs             # Seed script generating sample clinic, patients, 100 calls, and demo users
+│   └── schema.prisma        # MongoDB datasource and Prisma data models
 ├── public/                  # Static assets and icons
 ├── docs/                    # Development notes and testing specifications
 ├── explanation/             # Persistent architecture documentation for LLMs & engineers

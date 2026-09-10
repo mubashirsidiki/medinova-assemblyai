@@ -2,7 +2,7 @@
 
 **Medinova Health Network** is an enterprise AI healthcare platform designed to automate patient phone intake, clinical triage, department routing, and appointment scheduling.
 
-Live Deployment: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
+Live Deployment: `https://<dashboard-domain>.vercel.app/`
 
 ---
 
@@ -106,7 +106,7 @@ For deep technical dives, reference the modular explanation guides created in ea
 
 - **Next.js Web App Documentation**: [**`next-app/explanation/README.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/README.md)
   - `01_ARCHITECTURE.md`: Next.js 16 structure and design system.
-  - `02_DATABASE_AND_MODELS.md`: Prisma models and seed records.
+  - `02_DATABASE_AND_MODELS.md`: Prisma models and schema structure.
   - `03_AUTHENTICATION_AND_ROLES.md`: Session cookies and role security.
   - `04_ROUTES_AND_PAGES.md`: Public, user, and admin route map.
   - `05_LIVEKIT_VOICE_INTEGRATION.md`: WebRTC token minting and test lab.
@@ -139,6 +139,5 @@ uv sync --locked
 uv run python agent.py dev
 ```
 
-### 3. Demo Credentials
-- **Admin**: `marc_margulan@admin.medinova.de` / `MediNova#2026Admin`
-- **User**: `marc_margulan@user.medinova.de` / `MediNova#2026User`
+### 3. Authentication & Access
+User and admin accounts are provisioned through administrative onboarding. Account credentials and database connections are configured using secure environment variables.

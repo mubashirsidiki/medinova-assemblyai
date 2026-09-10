@@ -106,15 +106,12 @@ Catalog of pre-configured synthetic voice personas.
 
 ---
 
-## 3. Database Seeding
-To populate or reset test data:
+## 3. Database Provisioning & Management
+Database collections are defined declaratively in `prisma/schema.prisma`. Schema synchronization with MongoDB Atlas is managed via Prisma CLI:
 ```bash
-npm run db:seed
+# Push schema definitions to MongoDB
+npm run db:push
+
+# Open graphical database inspector
+npm run db:studio
 ```
-`prisma/seed.mjs` executes a full transactional refresh:
-1. Wipes existing collections in reverse dependency order.
-2. Creates "Medinova Health Network" organization.
-3. Seeds 5 clinic staff members and 5 patients.
-4. Generates 2 pre-hashed auth users (`admin` and `user`).
-5. Generates 100 realistic calls spanning the last 7 days with realistic transcripts, spam flags, and latency values.
-6. Seeds upcoming appointments, notifications, and 30-day usage telemetry events.

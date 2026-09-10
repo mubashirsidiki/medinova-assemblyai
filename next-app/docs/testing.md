@@ -108,14 +108,13 @@ Seed result:
 Verified on the current build:
 
 - `npm run build`
-- `npm run db:seed`
 - Playwright MCP login checks
 - Playwright MCP role-guard checks
 
 Observed behavior:
 
-- `marc_margulan@user.medinova.de` / `MediNova#2026User` opens the staff dashboard
-- `marc_margulan@admin.medinova.de` / `MediNova#2026Admin` opens the admin console
+- Staff user credentials open the staff dashboard (`/dashboard`)
+- Admin user credentials open the admin console (`/admin`)
 - `/admin` redirects back to `/dashboard` for a user session
 - `/dashboard` redirects back to `/admin` for an admin session
 - No browser console errors were present during the final Playwright MCP check
@@ -181,10 +180,10 @@ Browser testing was done with Playwright MCP and confirmed the live app pages re
 Steps checked:
 
 1. Opened `/login`
-2. Signed in with `marc_margulan@user.medinova.de` and `MediNova#2026User`
+2. Signed in with staff user credentials
 3. Confirmed the user lands on `/dashboard`
 4. Signed out
-5. Signed in with `marc_margulan@admin.medinova.de` and `MediNova#2026Admin`
+5. Signed in with admin credentials
 6. Confirmed the admin lands on `/admin`
 
 Expected outcome:
