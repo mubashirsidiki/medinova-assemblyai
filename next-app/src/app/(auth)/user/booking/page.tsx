@@ -90,6 +90,7 @@ export default async function BookingPage({
 
 		return {
 			key: dayDate.toISOString(),
+			isoDate: `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, "0")}-${String(dayDate.getDate()).padStart(2, "0")}`,
 			day: dayDate.getDate(),
 			isCurrentMonth: dayDate.getMonth() === monthDate.getMonth(),
 			slots: daySlots,
@@ -119,6 +120,8 @@ export default async function BookingPage({
 				patientNames={patients.map((patient) => patient.name)}
 				monthDays={monthDays}
 				monthLabel={monthLabel}
+				currentYear={year}
+				currentMonth={month}
 				createAppointmentAction={createAppointmentAction}
 				prevMonthHref={prevMonthHref}
 				nextMonthHref={nextMonthHref}

@@ -15,3 +15,15 @@
   - Explain the technical rationale, root cause, and potential pitfalls.
   - Offer better, safer alternative solutions with trade-offs.
 - **Teach and elevate**: Share best practices, patterns, and principles to foster continuous learning.
+
+## 4. Investigation Discipline (No Unapproved Fixes)
+- **Investigate means investigate only**: Whenever asked to investigate, diagnose, debug, inspect, find cause, or explain an issue:
+  - Find the root cause, gather verified evidence, and clearly explain why it is happening.
+  - Suggest potential solutions, alternatives, and trade-offs.
+  - **NEVER apply fixes, modify code, or run state-mutating commands/database updates without explicit user approval.**
+  - Always stop after diagnosis and wait for the user's explicit confirmation before implementing any fix.
+
+## 5. Workspace-Only Customizations (No Global Modifications)
+- **Project scope only**: Whenever asked to add or configure a skill, MCP server, plugin, or rule:
+  - Add or update them exclusively at the project/workspace level (e.g., in `.agents/`, local `mcp_config.json`, or repository `AGENTS.md`).
+  - **NEVER modify global configurations or user-level rules** (e.g., `~/.gemini/` or global config directories).

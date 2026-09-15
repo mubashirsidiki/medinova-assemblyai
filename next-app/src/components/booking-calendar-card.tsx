@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import bookingStyles from "@/app/(auth)/user/booking/booking.module.css";
 import { SectionTitle } from "@/components/ui";
@@ -15,6 +16,7 @@ type CalendarSlot = {
 
 type CalendarDay = {
 	key: string;
+	isoDate?: string;
 	day: number;
 	isCurrentMonth: boolean;
 	slots: CalendarSlot[];
@@ -30,9 +32,29 @@ type BookingCalendarCardProps = {
 	prevMonthHref: string;
 	nextMonthHref: string;
 	monthLabel: string;
+	currentYear?: number;
+	currentMonth?: number;
 };
 
 const DAY_HEADERS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const MONTHS = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December",
+];
+
+const START_YEAR = 2023;
+const END_YEAR = 2032;
+const YEARS = Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_YEAR + i);
 
 export function BookingCalendarCard({
 	organizationId,
@@ -43,8 +65,31 @@ export function BookingCalendarCard({
 	prevMonthHref,
 	nextMonthHref,
 	monthLabel,
+	currentYear = new Date().getFullYear(),
+	currentMonth = new Date().getMonth(),
 }: BookingCalendarCardProps) {
+	const router = useRouter();
 	const [isCreateOpen, setIsCreateOpen] = useState(false);
+	const [selectedDate, setSelectedDate] = useState<string | null>(null);
+	const [customScheduledAt, setCustomScheduledAt] = useState<string | null>(null);
+
+	function handleMonthChange(newMonth: number) {
+		const mStr = String(newMonth + 1).padStart(2, "0");
+		router.push(`/user/booking?month=${currentYear}-${mStr}`);
+	}
+
+	function handleYearChange(newYear: number) {
+		const mStr = String(currentMonth + 1).padStart(2, "0");
+		router.push(`/user/booking?month=${newYear}-${mStr}`);
+	}
+
+	function handleToday() {
+		router.push("/user/booking");
+	}
+
+	const selectedDayEntry = selectedDate
+		? monthDays.find((day) => day.isoDate === selectedDate)
+		: null;
 
 	return (
 		<div className="card card-pad calendar-card">
@@ -74,11 +119,93 @@ export function BookingCalendarCard({
 					<button
 						type="button"
 						className="action-btn primary"
-						onClick={() => setIsCreateOpen(true)}
+						onClick={() => {
+							if (selectedDate) {
+								setCustomScheduledAt(`${selectedDate}T09:00`);
+							}
+							setIsCreateOpen(true);
+						}}
 					>
 						Create appointment
 					</button>
 				</div>
+			</div>
+
+			<div className={bookingStyles.calendarNavToolbar}>
+				<div className={bookingStyles.calendarNavGroup}>
+					<Link
+						href={prevMonthHref}
+						className={bookingStyles.calendarNavBtn}
+						title="Previous month"
+						aria-label="Previous month"
+					>
+						‹
+					</Link>
+					<select
+						className={bookingStyles.calendarNavSelect}
+						value={currentMonth}
+						onChange={(e) => handleMonthChange(Number(e.target.value))}
+						aria-label="Select month"
+					>
+						{MONTHS.map((name, idx) => (
+							<option key={name} value={idx}>
+								{name}
+							</option>
+						))}
+					</select>
+					<select
+						className={bookingStyles.calendarNavSelect}
+						value={currentYear}
+						onChange={(e) => handleYearChange(Number(e.target.value))}
+						aria-label="Select year"
+					>
+						{YEARS.map((yr) => (
+							<option key={yr} value={yr}>
+								{yr}
+							</option>
+						))}
+					</select>
+					<Link
+						href={nextMonthHref}
+						className={bookingStyles.calendarNavBtn}
+						title="Next month"
+						aria-label="Next month"
+					>
+						›
+					</Link>
+					<button
+						type="button"
+						className={`${bookingStyles.calendarNavBtn} ${bookingStyles.calendarTodayBtn}`}
+						onClick={handleToday}
+						title="Jump to current date"
+					>
+						Today
+					</button>
+				</div>
+
+				{selectedDate ? (
+					<div className={bookingStyles.calendarSelectedPill}>
+						<span>Selected: <strong>{selectedDate}</strong></span>
+						{selectedDayEntry && selectedDayEntry.slots.length > 0 ? (
+							<span>({selectedDayEntry.slots.length} booked)</span>
+						) : (
+							<span>(Open)</span>
+						)}
+						<button
+							type="button"
+							className="action-btn primary"
+							style={{ fontSize: "0.74rem", padding: "3px 8px" }}
+							onClick={() => {
+								setCustomScheduledAt(`${selectedDate}T09:00`);
+								setIsCreateOpen(true);
+							}}
+						>
+							+ Book Date
+						</button>
+					</div>
+				) : (
+					<small className="subtle">Click any day to inspect or book</small>
+				)}
 			</div>
 
 			<div className="calendar-real">
@@ -91,57 +218,48 @@ export function BookingCalendarCard({
 				</div>
 
 				<div className="calendar-real-grid">
-					{monthDays.map((entry) => (
-						<div
-							className={`calendar-real-day${!entry.isCurrentMonth ? " calendar-other-month" : ""}`}
-							key={entry.key}
-						>
-							<div className="calendar-day-num">{entry.day}</div>
-							{entry.slots.length > 0 ? (
-								<>
-									{entry.slots.map((slot) => (
-										<div className="calendar-event" key={slot.id}>
-											<span className="calendar-event-time">{slot.time}</span>
-											<span className="calendar-event-dept">
-												{slot.department}
-											</span>
-										</div>
-									))}
-									{entry.moreCount > 0 ? (
-										<div className="calendar-more">+{entry.moreCount} more</div>
-									) : null}
-								</>
-							) : (
-								<div className="calendar-open">Open</div>
-							)}
-						</div>
-					))}
+					{monthDays.map((entry) => {
+						const isSelected = selectedDate === entry.isoDate;
+						return (
+							<div
+								className={`calendar-real-day${!entry.isCurrentMonth ? " calendar-other-month" : ""} ${bookingStyles.calendarDayClickable}${isSelected ? ` ${bookingStyles.calendarDaySelected}` : ""}`}
+								key={entry.key}
+								onClick={() => {
+									if (entry.isoDate) setSelectedDate(entry.isoDate);
+								}}
+								role="button"
+								tabIndex={0}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										if (entry.isoDate) setSelectedDate(entry.isoDate);
+									}
+								}}
+								title={entry.isoDate ? `Select ${entry.isoDate}` : undefined}
+							>
+								<div className="calendar-day-num">{entry.day}</div>
+								{entry.slots.length > 0 ? (
+									<>
+										{entry.slots.map((slot) => (
+											<div className="calendar-event" key={slot.id}>
+												<span className="calendar-event-time">{slot.time}</span>
+												<span className="calendar-event-dept">
+													{slot.department}
+												</span>
+											</div>
+										))}
+										{entry.moreCount > 0 ? (
+											<div className="calendar-more">+{entry.moreCount} more</div>
+										) : null}
+									</>
+								) : (
+									<div className="calendar-open">Open</div>
+								)}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "flex-end",
-					gap: "8px",
-					marginTop: "8px",
-				}}
-			>
-				<Link
-					href={prevMonthHref}
-					className="action-btn primary"
-					style={{ fontSize: "0.78rem", padding: "5px 10px" }}
-				>
-					‹ Prev month
-				</Link>
-				<Link
-					href={nextMonthHref}
-					className="action-btn primary"
-					style={{ fontSize: "0.78rem", padding: "5px 10px" }}
-				>
-					Next month ›
-				</Link>
-			</div>
 
 			{isCreateOpen ? (
 				<div
@@ -245,7 +363,8 @@ export function BookingCalendarCard({
 											name="scheduledAt"
 											type="datetime-local"
 											required
-											defaultValue={defaultScheduledAt}
+											key={customScheduledAt || defaultScheduledAt}
+											defaultValue={customScheduledAt || defaultScheduledAt}
 										/>
 									</div>
 									<div className="field">
