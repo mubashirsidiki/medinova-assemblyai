@@ -103,7 +103,9 @@ export default async function AIBotSettingsPage() {
 								<input
 									id="liveNumber"
 									name="liveNumber"
-									defaultValue="+1 484 481 3551"
+									defaultValue={
+										settings.liveNumbers?.[0]?.phoneNumber ?? "+1 484 481 2043"
+									}
 									disabled
 									required
 								/>

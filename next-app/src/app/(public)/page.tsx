@@ -79,23 +79,11 @@ export default function LandingPage() {
 					initial="hidden"
 					animate="visible"
 				>
-					<motion.div variants={v.fadeInUp} transition={{ ...t, delay: 0.15 }}>
-						<div className={styles.landingHeroBadge}>
-							<Image
-								src="/uk-flag.svg"
-								alt=""
-								width={35}
-								height={28}
-								aria-hidden="true"
-							/>
-							<span>Built in the UK. For UK Healthcare.</span>
-						</div>
-					</motion.div>
 					<motion.h1
 						variants={v.fadeInUp}
 						transition={{ ...t, delay: 0.3, duration: 0.6 }}
 					>
-						Voice AI for UK&apos;s healthcare providers
+						Voice AI for modern healthcare providers
 					</motion.h1>
 					<motion.p variants={v.fadeInUp} transition={{ ...t, delay: 0.5 }}>
 						Medinova Health handles patient calls, books appointments, and flags
@@ -146,7 +134,7 @@ export default function LandingPage() {
 				viewport={viewportOnce}
 			>
 				<motion.h2 variants={v.fadeInUp} transition={t}>
-					Built for the NHS. Refined for your practice.
+					Built for clinical excellence. Refined for your practice.
 				</motion.h2>
 				<div className={styles.landingFeaturesGrid}>
 					<motion.div
@@ -175,9 +163,9 @@ export default function LandingPage() {
 						</div>
 						<h3>Intelligent Call Handling</h3>
 						<p>
-							Natural voice conversations that understand regional accents, NHS
-							workflows, and clinical urgency. Routes every call to the right
-							team instantly.
+							Natural voice conversations that understand diverse accents,
+							clinical workflows, and patient urgency. Routes every call to the
+							right team instantly.
 						</p>
 					</motion.div>
 
@@ -210,9 +198,9 @@ export default function LandingPage() {
 						</div>
 						<h3>Automated Booking &amp; Sync</h3>
 						<p>
-							Patients book appointments by voice. Calendar syncs with NHS
-							systems and sends SMS confirmations, zero admin overhead for your
-							reception team.
+							Patients book appointments by voice. Calendar syncs with practice
+							calendars and sends SMS confirmations, zero admin overhead for
+							your reception team.
 						</p>
 					</motion.div>
 
@@ -245,95 +233,11 @@ export default function LandingPage() {
 						<h3>Real-Time Analytics &amp; Compliance</h3>
 						<p>
 							Live dashboards track every call, flag urgent cases, and maintain
-							NHS data protection standards. Full audit trail, always compliant.
+							enterprise healthcare data protection standards. Full audit trail,
+							always compliant.
 						</p>
 					</motion.div>
 				</div>
-			</motion.section>
-
-			{/* Closer */}
-			<motion.section
-				className={styles.landingCloser}
-				variants={staggerContainer}
-				initial="hidden"
-				whileInView="visible"
-				viewport={viewportOnce}
-			>
-				<motion.h2
-					className={styles.landingCloserHeading}
-					variants={v.fadeInUp}
-					transition={t}
-				>
-					See for yourself!
-				</motion.h2>
-				<motion.div
-					className={styles.landingCloserCard}
-					variants={v.scaleIn}
-					transition={{ ...t, duration: 0.6 }}
-				>
-					<motion.div
-						className={styles.landingCloserCopy}
-						variants={v.fadeInUp}
-						transition={t}
-					>
-						<h2>See Medinova Health in action</h2>
-						<p>
-							A 4-minute demo of the platform, showing real patient calls,
-							booking flows, and the analytics dashboard.
-						</p>
-						<motion.button
-							type="button"
-							className={styles.landingBtnPrimary}
-							whileHover={
-								reduced
-									? {}
-									: {
-											scale: 1.03,
-											boxShadow: "0 8px 28px rgba(59,108,255,0.35)",
-										}
-							}
-							whileTap={reduced ? {} : { scale: 0.98 }}
-						>
-							Click to see the video
-						</motion.button>
-					</motion.div>
-					<motion.div
-						className={styles.landingCloserVisual}
-						aria-hidden="true"
-						variants={v.fadeIn}
-						transition={t}
-					>
-						<svg
-							viewBox="0 0 200 140"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<rect
-								x="20"
-								y="20"
-								width="160"
-								height="100"
-								rx="12"
-								fill="white"
-								stroke="#3b6cff"
-								strokeWidth="2"
-							/>
-							<rect
-								x="35"
-								y="40"
-								width="60"
-								height="8"
-								rx="4"
-								fill="#3b6cff"
-								opacity="0.3"
-							/>
-							<rect x="35" y="55" width="90" height="8" rx="4" fill="#e1e6ef" />
-							<rect x="35" y="70" width="70" height="8" rx="4" fill="#e1e6ef" />
-							<circle cx="160" cy="30" r="10" fill="#22c98a" opacity="0.6" />
-							<circle cx="160" cy="30" r="6" fill="#22c98a" />
-						</svg>
-					</motion.div>
-				</motion.div>
 			</motion.section>
 
 			{/* How It Works */}
@@ -426,7 +330,7 @@ export default function LandingPage() {
 					variants={v.fadeIn}
 					transition={t}
 				>
-					Trusted by NHS trusts across West Yorkshire
+					Trusted by clinics, hospitals, and healthcare networks
 				</motion.p>
 				<motion.div
 					className={styles.landingTrustStats}
@@ -465,7 +369,7 @@ export default function LandingPage() {
 					variants={v.fadeIn}
 					transition={{ ...t, delay: 0.4 }}
 				>
-					Built for the UK healthcare system
+					Built for high-volume healthcare operations
 				</motion.p>
 			</motion.section>
 
@@ -479,7 +383,7 @@ export default function LandingPage() {
 			>
 				<div className={styles.landingFooterBrand}>
 					<Image src="/medinova.svg" alt="" width={22} height={22} />
-					<span>Medinova Health Ltd, Leeds, United Kingdom</span>
+					<span>Medinova Health Network</span>
 				</div>
 				<div className={styles.landingFooterLinks}>
 					<Link href="/privacy">Privacy</Link>

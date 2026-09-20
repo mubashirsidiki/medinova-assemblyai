@@ -1,42 +1,48 @@
+import { ArrowLeft, Home } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import styles from "./not-found.module.css";
 
 export default function NotFound() {
 	return (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				minHeight: "100vh",
-				fontFamily: "system-ui, sans-serif",
-				background: "#f5f6fa",
-			}}
-		>
-			<div style={{ textAlign: "center", padding: 32 }}>
-				<h1
-					style={{ fontSize: 72, fontWeight: 700, color: "#3b6cff", margin: 0 }}
-				>
-					404
-				</h1>
-				<h2 style={{ fontSize: 20, margin: "8px 0 4px" }}>Page not found</h2>
-				<p style={{ color: "#666", marginBottom: 24 }}>
-					The page you are looking for does not exist.
+		<main className={styles.wrapper}>
+			<div className={styles.card}>
+				<div className={styles.brandBar}>
+					<Image
+						src="/medinova.svg"
+						alt="Medinova logo"
+						width={22}
+						height={22}
+						priority
+					/>
+					<span className={styles.brandName}>Medinova Health</span>
+				</div>
+
+				<div className={styles.heroNumber}>404</div>
+
+				<div className={styles.waveContainer} role="region">
+					{Array.from({ length: 11 }).map((_, i) => (
+						<div className={styles.waveBar} key={i} />
+					))}
+				</div>
+
+				<h1 className={styles.title}>Page Not Found</h1>
+				<p className={styles.subtitle}>
+					This frequency doesn&apos;t exist or has been moved.
 				</p>
-				<Link
-					href="/"
-					style={{
-						padding: "8px 20px",
-						borderRadius: 6,
-						border: "none",
-						background: "#3b6cff",
-						color: "#fff",
-						textDecoration: "none",
-						fontSize: 14,
-					}}
-				>
-					Back to home
-				</Link>
+
+				<div className={styles.actionsRow}>
+					<Link href="/" className={styles.primaryBtn}>
+						<Home size={15} />
+						Reception
+					</Link>
+
+					<Link href="/user/dashboard" className={styles.secondaryBtn}>
+						<ArrowLeft size={15} />
+						Dashboard
+					</Link>
+				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

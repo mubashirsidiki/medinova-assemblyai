@@ -1,0 +1,164 @@
+.errorWrapper {
+	min-height: calc(100vh - 140px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background:
+		radial-gradient(
+			circle at 20% 20%,
+			rgba(59, 108, 255, 0.06),
+			transparent 35%
+		),
+		var(--bg, #f4f6fb);
+	font-family: var(--font-inter, Inter), system-ui, -apple-system, sans-serif;
+	color: var(--text, #232833);
+}
+
+.errorCard {
+	width: 100%;
+	max-width: 420px;
+	background: #ffffff;
+	border: 1px solid var(--line-2, #edf1f7);
+	border-radius: 20px;
+	box-shadow: 0 12px 36px rgba(35, 45, 75, 0.08);
+	padding: 32px 28px 28px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.brandBar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 18px;
+}
+
+.brandName {
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--muted, #8f97a5);
+	letter-spacing: -0.01em;
+}
+
+.iconCircle {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	margin-bottom: 14px;
+}
+
+.iconCircle.warning {
+	background: #fff7ed;
+	color: #ea580c;
+	border: 1px solid #ffedd5;
+}
+
+.iconCircle.danger {
+	background: #fef2f2;
+	color: #ef4444;
+	border: 1px solid #fee2e2;
+}
+
+.title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--text, #232833);
+	margin-bottom: 6px;
+}
+
+.message {
+	font-size: 0.88rem;
+	line-height: 1.5;
+	color: #64748b;
+	margin-bottom: 22px;
+	max-width: 320px;
+}
+
+.actionsRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.primaryBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	background: var(--blue, #3b6cff);
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 0.85rem;
+	padding: 10px 18px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.primaryBtn:hover {
+	background: #2b5bee;
+}
+
+.primaryBtn:disabled {
+	opacity: 0.75;
+	cursor: not-allowed;
+}
+
+.spin {
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.secondaryBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	background: #ffffff;
+	color: var(--text, #232833);
+	font-weight: 500;
+	font-size: 0.85rem;
+	padding: 9px 16px;
+	border-radius: 10px;
+	border: 1px solid var(--line, #e5eaf2);
+	text-decoration: none;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.secondaryBtn:hover {
+	background: #f8faff;
+}
+
+@media (max-width: 480px) {
+	.errorCard {
+		padding: 24px 20px;
+	}
+
+	.actionsRow {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.primaryBtn,
+	.secondaryBtn {
+		width: 100%;
+	}
+}

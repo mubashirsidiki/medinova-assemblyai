@@ -1,0 +1,209 @@
+.wrapper {
+	min-height: calc(100vh - 140px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background:
+		radial-gradient(
+			circle at 20% 20%,
+			rgba(59, 108, 255, 0.06),
+			transparent 35%
+		),
+		var(--bg, #f4f6fb);
+	font-family: var(--font-inter, Inter), system-ui, -apple-system, sans-serif;
+	color: var(--text, #232833);
+}
+
+.card {
+	width: 100%;
+	max-width: 420px;
+	background: #ffffff;
+	border: 1px solid var(--line-2, #edf1f7);
+	border-radius: 20px;
+	box-shadow: 0 12px 36px rgba(35, 45, 75, 0.08);
+	padding: 32px 28px 28px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.brandBar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 18px;
+}
+
+.brandName {
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--muted, #8f97a5);
+	letter-spacing: -0.01em;
+}
+
+.heroNumber {
+	font-size: 3.8rem;
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: -0.04em;
+	color: var(--blue, #3b6cff);
+	margin: 0 0 14px;
+}
+
+/* Subtle, minimal audio equalizer */
+.waveContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 3px;
+	height: 24px;
+	margin-bottom: 14px;
+}
+
+.waveBar {
+	width: 3px;
+	background: #85a2ff;
+	border-radius: 2px;
+	animation: wavePulse 1.3s ease-in-out infinite alternate;
+}
+
+.waveBar:nth-child(1) {
+	height: 6px;
+	animation-delay: 0.05s;
+}
+.waveBar:nth-child(2) {
+	height: 12px;
+	animation-delay: 0.2s;
+}
+.waveBar:nth-child(3) {
+	height: 20px;
+	animation-delay: 0.35s;
+}
+.waveBar:nth-child(4) {
+	height: 10px;
+	animation-delay: 0.1s;
+}
+.waveBar:nth-child(5) {
+	height: 22px;
+	animation-delay: 0.45s;
+}
+.waveBar:nth-child(6) {
+	height: 4px;
+	animation-delay: 0.1s;
+	background: #cbd5e1;
+} /* gap */
+.waveBar:nth-child(7) {
+	height: 18px;
+	animation-delay: 0.3s;
+}
+.waveBar:nth-child(8) {
+	height: 12px;
+	animation-delay: 0.15s;
+}
+.waveBar:nth-child(9) {
+	height: 20px;
+	animation-delay: 0.4s;
+}
+.waveBar:nth-child(10) {
+	height: 10px;
+	animation-delay: 0.25s;
+}
+.waveBar:nth-child(11) {
+	height: 5px;
+	animation-delay: 0.05s;
+}
+
+@keyframes wavePulse {
+	0% {
+		transform: scaleY(0.4);
+		opacity: 0.4;
+	}
+	100% {
+		transform: scaleY(1);
+		opacity: 1;
+	}
+}
+
+.title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--text, #232833);
+	margin-bottom: 6px;
+}
+
+.subtitle {
+	font-size: 0.88rem;
+	line-height: 1.5;
+	color: #64748b;
+	margin-bottom: 22px;
+	max-width: 320px;
+}
+
+.actionsRow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.primaryBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	background: var(--blue, #3b6cff);
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 0.85rem;
+	padding: 10px 18px;
+	border-radius: 10px;
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.primaryBtn:hover {
+	background: #2b5bee;
+}
+
+.secondaryBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 7px;
+	background: #ffffff;
+	color: var(--text, #232833);
+	font-weight: 500;
+	font-size: 0.85rem;
+	padding: 9px 16px;
+	border-radius: 10px;
+	border: 1px solid var(--line, #e5eaf2);
+	text-decoration: none;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.secondaryBtn:hover {
+	background: #f8faff;
+}
+
+@media (max-width: 480px) {
+	.card {
+		padding: 24px 20px;
+	}
+
+	.actionsRow {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.primaryBtn,
+	.secondaryBtn {
+		width: 100%;
+	}
+}
