@@ -54,7 +54,10 @@ const MONTHS = [
 
 const START_YEAR = 2023;
 const END_YEAR = 2032;
-const YEARS = Array.from({ length: END_YEAR - START_YEAR + 1 }, (_, i) => START_YEAR + i);
+const YEARS = Array.from(
+	{ length: END_YEAR - START_YEAR + 1 },
+	(_, i) => START_YEAR + i,
+);
 
 export function BookingCalendarCard({
 	organizationId,
@@ -71,7 +74,9 @@ export function BookingCalendarCard({
 	const router = useRouter();
 	const [isCreateOpen, setIsCreateOpen] = useState(false);
 	const [selectedDate, setSelectedDate] = useState<string | null>(null);
-	const [customScheduledAt, setCustomScheduledAt] = useState<string | null>(null);
+	const [customScheduledAt, setCustomScheduledAt] = useState<string | null>(
+		null,
+	);
 
 	function handleMonthChange(newMonth: number) {
 		const mStr = String(newMonth + 1).padStart(2, "0");
@@ -185,7 +190,9 @@ export function BookingCalendarCard({
 
 				{selectedDate ? (
 					<div className={bookingStyles.calendarSelectedPill}>
-						<span>Selected: <strong>{selectedDate}</strong></span>
+						<span>
+							Selected: <strong>{selectedDate}</strong>
+						</span>
 						{selectedDayEntry && selectedDayEntry.slots.length > 0 ? (
 							<span>({selectedDayEntry.slots.length} booked)</span>
 						) : (
@@ -248,7 +255,9 @@ export function BookingCalendarCard({
 											</div>
 										))}
 										{entry.moreCount > 0 ? (
-											<div className="calendar-more">+{entry.moreCount} more</div>
+											<div className="calendar-more">
+												+{entry.moreCount} more
+											</div>
 										) : null}
 									</>
 								) : (
@@ -259,7 +268,6 @@ export function BookingCalendarCard({
 					})}
 				</div>
 			</div>
-
 
 			{isCreateOpen ? (
 				<div

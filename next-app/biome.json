@@ -11,7 +11,8 @@
 				"useMediaCaption": "off",
 				"noStaticElementInteractions": "off",
 				"noNoninteractiveElementInteractions": "off",
-				"noLabelWithoutControl": "off"
+				"noLabelWithoutControl": "off",
+				"useSemanticElements": "off"
 			},
 			"correctness": {
 				"noUnusedImports": "warn",

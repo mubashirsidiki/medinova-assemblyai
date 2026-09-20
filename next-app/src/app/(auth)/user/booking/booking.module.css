@@ -81,14 +81,14 @@
 	gap: 0;
 }
 
-/* Desktop compact layout */
+/* Desktop layout */
 @media (min-width: 961px) {
 	.bookingPageStatic {
-		height: 100%;
-		min-height: 0;
-		overflow: hidden;
-		grid-template-rows: auto minmax(0, 1fr) auto;
-		gap: 8px;
+		height: auto;
+		min-height: 100%;
+		overflow: visible;
+		display: grid;
+		gap: 14px;
 	}
 
 	.bookingPageStatic :global(.route-head) {
@@ -105,7 +105,11 @@
 		padding: 12px;
 	}
 
-	.bookingPageStatic :global(.calendar-card),
+	.bookingPageStatic :global(.calendar-card) {
+		min-height: 480px;
+		gap: 10px;
+	}
+
 	.bookingPageStatic :global(.grid-2) {
 		min-height: 0;
 	}
@@ -205,7 +209,7 @@
 
 	.bookingPageStatic :global(.list),
 	.bookingPageStatic :global(.note-stack) {
-		max-height: none;
+		max-height: 320px;
 		min-height: 0;
 		overflow-y: auto;
 		gap: 8px;
@@ -489,7 +493,9 @@
 	color: var(--foreground, #1f2937);
 	cursor: pointer;
 	outline: none;
-	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease;
 }
 
 .calendarNavSelect:focus {
@@ -551,10 +557,11 @@
 
 .calendarDayClickable {
 	cursor: pointer;
-	transition: background 0.15s ease, outline 0.15s ease;
+	transition:
+		background 0.15s ease,
+		outline 0.15s ease;
 }
 
 .calendarDayClickable:hover {
 	background: rgba(59, 130, 246, 0.06);
 }
-
