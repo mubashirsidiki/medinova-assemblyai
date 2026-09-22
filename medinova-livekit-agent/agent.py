@@ -46,7 +46,13 @@ from constants import (
     USER_AWAY_PROMPT,
     WAIT_FOR_USER_SECONDS,
 )
-from core.database import fetch_agent_config, save_call_record
+from core.database import (
+    build_returning_caller_context,
+    fetch_agent_config,
+    fetch_caller_history,
+    normalize_phone_number,
+    save_call_record,
+)
 from core.logging.logger import LOG
 from core.models import CallClassification
 
@@ -161,7 +167,12 @@ async def _classify_call(chat_ctx: ChatContext) -> CallClassification | None:
 
 
 class Assistant(Agent):
-    def __init__(self, *, instructions: str | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        instructions: str | None = None,
+        greeting_instructions: str | None = None,
+    ) -> None:
         super().__init__(
             instructions=instructions or ASSISTANT_DEFAULT_INSTRUCTIONS,
             tools=[
@@ -171,10 +182,13 @@ class Assistant(Agent):
                 ),
             ],
         )
+        self.greeting_instructions = (
+            greeting_instructions or GENERATE_REPLY_INSTRUCTIONS
+        )
 
     async def on_enter(self) -> None:
         self.session.generate_reply(
-            instructions=GENERATE_REPLY_INSTRUCTIONS,
+            instructions=self.greeting_instructions,
             allow_interruptions=True,
         )
 
@@ -246,6 +260,61 @@ async def entrypoint(ctx: agents.JobContext):
         instructions = ASSISTANT_DEFAULT_INSTRUCTIONS
         LOG.info("Using default instructions from constants")
 
+    # Detect caller phone number from SIP attributes, custom attributes, metadata, or identity
+    detected_caller_phone: str | None = None
+    if participant.attributes:
+        detected_caller_phone = (
+            participant.attributes.get("sip.phoneNumber")
+            or participant.attributes.get("callerPhone")
+            or participant.attributes.get("phoneNumber")
+        )
+
+    if not detected_caller_phone and participant.metadata:
+        try:
+            meta = json.loads(participant.metadata)
+            if isinstance(meta, dict):
+                detected_caller_phone = meta.get("callerPhone") or meta.get(
+                    "phoneNumber"
+                )
+        except Exception as e:
+            LOG.debug(f"Failed to parse participant metadata for phone: {e}")
+
+    if not detected_caller_phone and participant.identity:
+        ident = participant.identity.strip()
+        ident = ident.removeprefix("sip_")
+        norm_ident = normalize_phone_number(ident)
+        if len(norm_ident) >= 10:
+            detected_caller_phone = norm_ident
+
+    # Look up caller history in database
+    caller_history = None
+    known_caller_name: str | None = None
+    greeting_instructions = GENERATE_REPLY_INSTRUCTIONS
+
+    if detected_caller_phone:
+        LOG.info(f"Detected caller phone: {detected_caller_phone}")
+        caller_history = fetch_caller_history(detected_caller_phone)
+        if caller_history:
+            known_caller_name = caller_history.get("caller_name")
+            LOG.info(
+                f"Returning caller recognized: {known_caller_name or 'Name unknown'} "
+                f"({caller_history.get('total_calls')} prior calls)"
+            )
+            returning_context = build_returning_caller_context(caller_history)
+            instructions = f"{instructions}\n\n{returning_context}"
+
+            if known_caller_name:
+                greeting_instructions = (
+                    f"The caller is a returning patient named {known_caller_name}. "
+                    f"Greet {known_caller_name} warmly by name, welcome them back to Medinova Health, "
+                    "and ask how you can help them with their health concern today in 1-2 friendly, empathetic sentences."
+                )
+            else:
+                greeting_instructions = (
+                    "This caller is calling back from a recognized phone number, but their name is not yet on file. "
+                    "Welcome them back to Medinova Health warmly, and ask how you can help them with their health concern today in 1-2 friendly sentences."
+                )
+
     call_started_at = datetime.now(tz=UTC)
     inactivity_task: asyncio.Task | None = None
 
@@ -275,7 +344,10 @@ async def entrypoint(ctx: agents.JobContext):
 
     await session.start(
         room=ctx.room,
-        agent=Assistant(instructions=instructions),
+        agent=Assistant(
+            instructions=instructions,
+            greeting_instructions=greeting_instructions,
+        ),
         room_options=room_io.RoomOptions(
             delete_room_on_close=True,
             audio_input=room_io.AudioInputOptions(
@@ -329,8 +401,17 @@ async def entrypoint(ctx: agents.JobContext):
                 record = {
                     "room_name": ctx.room.name,
                     "participant_identity": participant.identity,
-                    "caller_name": classification.caller_name,
-                    "caller_phone": classification.caller_phone_number,
+                    "caller_name": (
+                        classification.caller_name
+                        if classification.caller_name
+                        and classification.caller_name.strip().lower()
+                        not in ("unknown", "unknown caller", "user", "n/a", "none")
+                        else known_caller_name
+                    ),
+                    "caller_phone": (
+                        classification.caller_phone_number or detected_caller_phone
+                    ),
+                    "known_caller_name": known_caller_name,
                     "started_at": call_started_at,
                     "duration_seconds": duration,
                     "transcript": transcript,

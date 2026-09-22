@@ -4,10 +4,12 @@ import { Loader2, SendHorizonal } from "lucide-react";
 
 export function WelcomeView({
 	botName,
+	callerPhone = "+1 484 481 2043",
 	onStartCall,
 	isConnecting = false,
 }: {
 	botName: string;
+	callerPhone?: string;
 	onStartCall: () => void;
 	isConnecting?: boolean;
 }) {
@@ -19,6 +21,30 @@ export function WelcomeView({
 					<div className="bot-orb" aria-hidden="true" />
 				</div>
 				<small className="subtle">Ready to test {botName}</small>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: "6px",
+						margin: "4px 0 10px",
+						fontSize: "12px",
+						color: "var(--text-subtle)",
+					}}
+				>
+					<span>Line:</span>
+					<code
+						style={{
+							fontSize: "11px",
+							fontWeight: 600,
+							padding: "2px 6px",
+							borderRadius: "4px",
+							background: "rgba(59,108,255,0.1)",
+							color: "var(--brand, #3b6cff)",
+						}}
+					>
+						{callerPhone}
+					</code>
+				</div>
 				<div className="control-row">
 					<button
 						className="action-btn primary voice-start-btn"

@@ -28,6 +28,10 @@ export async function POST(req: Request) {
 		if (!API_KEY) throw new Error("LIVEKIT_API_KEY is not defined");
 		if (!API_SECRET) throw new Error("LIVEKIT_API_SECRET is not defined");
 
+		const url = new URL(req.url);
+		const queryPhone = url.searchParams.get("callerPhone");
+		const queryName = url.searchParams.get("callerName");
+
 		const body = await req.json().catch(() => ({}));
 		const roomConfig = body?.room_config
 			? RoomConfiguration.fromJson(body.room_config, {
@@ -35,13 +39,24 @@ export async function POST(req: Request) {
 				})
 			: undefined;
 
-		const participantName = "user";
+		const callerPhone =
+			typeof body?.callerPhone === "string"
+				? body.callerPhone.trim()
+				: (queryPhone?.trim() ?? undefined);
+		const callerName =
+			typeof body?.callerName === "string"
+				? body.callerName.trim()
+				: (queryName?.trim() ?? undefined);
+
+		const participantName = callerName || "user";
 		const participantIdentity = `voice_assistant_user_${Math.floor(Math.random() * 10_000)}`;
 		const roomName = `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
 
 		console.log("[LiveKit Token] Generating token:", {
 			roomName,
 			participantIdentity,
+			callerPhone: callerPhone ?? "None",
+			callerName: callerName ?? "None",
 			hasRoomConfig: !!roomConfig,
 		});
 
@@ -49,6 +64,8 @@ export async function POST(req: Request) {
 			{ identity: participantIdentity, name: participantName },
 			roomName,
 			roomConfig,
+			callerPhone,
+			callerName,
 		);
 
 		const data: ConnectionDetails = {
@@ -83,8 +100,10 @@ function createParticipantToken(
 	userInfo: AccessTokenOptions,
 	roomName: string,
 	roomConfig: RoomConfiguration | undefined,
+	callerPhone?: string,
+	callerName?: string,
 ): Promise<string> {
-	const at = new AccessToken(API_KEY!, API_SECRET!, {
+	const at = new AccessToken(API_KEY ?? "", API_SECRET ?? "", {
 		...userInfo,
 		ttl: "15m",
 	});
@@ -97,5 +116,17 @@ function createParticipantToken(
 	};
 	at.addGrant(grant);
 	if (roomConfig) at.roomConfig = roomConfig as unknown as typeof at.roomConfig;
+
+	if (callerPhone || callerName) {
+		at.attributes = {
+			...(callerPhone ? { "sip.phoneNumber": callerPhone, callerPhone } : {}),
+			...(callerName ? { callerName } : {}),
+		};
+		at.metadata = JSON.stringify({
+			callerPhone,
+			callerName,
+		});
+	}
+
 	return at.toJwt();
 }

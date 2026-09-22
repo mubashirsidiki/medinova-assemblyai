@@ -3,11 +3,15 @@ import re
 from datetime import UTC, datetime
 
 from bson import ObjectId
+from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.database import Database
 
 from constants import DEFAULT_MONGODB_DATABASE
 from core.logging.logger import LOG
+
+load_dotenv(".env.local")
+load_dotenv()
 
 MONGODB_URI = os.getenv("MONGODB_URI", "")
 ORGANIZATION_ID = os.getenv("ORGANIZATION_ID", "")
@@ -97,8 +101,16 @@ def save_call_record(payload: dict):
     try:
         org_oid = ObjectId(ORGANIZATION_ID)
         caller_name = (
-            payload.get("caller_name")
-            or (classification.caller_name if classification else None)
+            (
+                classification.caller_name
+                if classification
+                and classification.caller_name
+                and classification.caller_name.strip().lower()
+                not in ("unknown", "unknown caller", "user", "n/a", "none")
+                else None
+            )
+            or payload.get("caller_name")
+            or payload.get("known_caller_name")
             or "Unknown"
         )
         caller_phone = payload.get("caller_phone") or (
@@ -270,3 +282,170 @@ def save_call_record(payload: dict):
 
     except Exception as e:
         LOG.error(f"Failed to save call record to MongoDB: {e}")
+
+
+def normalize_phone_number(raw: str | None) -> str:
+    """Normalize phone number into standard E.164-like digits (e.g. +14844812043)."""
+    if not raw:
+        return ""
+    cleaned = raw.strip()
+    if cleaned.lower().startswith("sip:"):
+        cleaned = cleaned[4:]
+    if "@" in cleaned:
+        cleaned = cleaned.split("@")[0]
+    if cleaned.lower().startswith("tel:"):
+        cleaned = cleaned[4:]
+
+    has_plus = cleaned.startswith("+")
+    digits = re.sub(r"[^\d]", "", cleaned)
+    if not digits:
+        return ""
+    if has_plus:
+        return f"+{digits}"
+    if len(digits) == 10:
+        return f"+1{digits}"
+    return f"+{digits}" if len(digits) >= 11 else digits
+
+
+def fetch_caller_history(caller_phone: str) -> dict | None:
+    """Query MongoDB for historical calls associated with this phone number.
+
+    Returns structured summary if prior calls exist, else None.
+    """
+    if _db is None or not caller_phone:
+        return None
+
+    normalized = normalize_phone_number(caller_phone)
+    if not normalized:
+        return None
+
+    digits = re.sub(r"[^\d]", "", normalized)
+    last_10 = digits[-10:] if len(digits) >= 10 else digits
+
+    # Regex matching significant digits across spaces/dashes/brackets
+    regex_pattern = ".*".join(list(last_10))
+
+    try:
+        call_col = _db.get_collection("CallRecord")
+        query: dict = {
+            "$or": [
+                {"callerPhone": {"$regex": regex_pattern, "$options": "i"}},
+                {"callerPhone": caller_phone},
+                {"callerPhone": normalized},
+            ]
+        }
+        if ORGANIZATION_ID:
+            query["organizationId"] = ObjectId(ORGANIZATION_ID)
+
+        cursor = call_col.find(query).sort("startedAt", -1).limit(5)
+        records = list(cursor)
+
+        if not records:
+            return None
+
+        # Resolve best known caller name (latest non-empty, non-Unknown name)
+        caller_name: str | None = None
+        for r in records:
+            name = (r.get("callerName") or "").strip()
+            if name and name.lower() not in (
+                "unknown",
+                "unknown caller",
+                "user",
+                "n/a",
+                "none",
+            ):
+                caller_name = name
+                break
+
+        # Check linked Patient collection if patientId exists and no name resolved yet
+        if not caller_name:
+            for r in records:
+                p_id = r.get("patientId")
+                if p_id:
+                    p_doc = _db.get_collection("Patient").find_one({"_id": p_id})
+                    if p_doc and p_doc.get("name"):
+                        p_name = p_doc["name"].strip()
+                        if p_name and p_name.lower() not in (
+                            "unknown",
+                            "unknown caller",
+                        ):
+                            caller_name = p_name
+                            break
+
+        past_calls = []
+        for r in records:
+            started = r.get("startedAt")
+            date_str = (
+                started.strftime("%Y-%m-%d")
+                if isinstance(started, datetime)
+                else str(started or "")
+            )
+            dept = r.get("recommendedDepartment") or ""
+            appt_d = r.get("appointmentDate") or ""
+            appt_t = r.get("appointmentTime") or ""
+            appt_info = f"{appt_d} at {appt_t}".strip() if appt_d else "None"
+
+            past_calls.append(
+                {
+                    "date": date_str,
+                    "intent": r.get("intent") or "General inquiry",
+                    "department": dept,
+                    "appointment": appt_info,
+                    "urgency": r.get("urgency") or "LOW",
+                    "callback_required": r.get("callbackRequired") or "NO",
+                }
+            )
+
+        last_call = records[0]
+        last_started = last_call.get("startedAt")
+        last_date = (
+            last_started.strftime("%Y-%m-%d %H:%M UTC")
+            if isinstance(last_started, datetime)
+            else ""
+        )
+
+        return {
+            "caller_phone": caller_phone,
+            "normalized_phone": normalized,
+            "caller_name": caller_name,
+            "total_calls": len(records),
+            "last_call_date": last_date,
+            "past_calls": past_calls,
+        }
+    except Exception as e:
+        LOG.warning(f"Failed to fetch caller history for {caller_phone}: {e}")
+        return None
+
+
+def build_returning_caller_context(history: dict) -> str:
+    """Format returning caller history into a clean system instruction block."""
+    name_display = history.get("caller_name") or "Name not on file"
+    phone_display = history.get("caller_phone") or history.get("normalized_phone")
+    total = history.get("total_calls", 1)
+
+    lines = [
+        "## RETURNING PATIENT PROFILE & CALL HISTORY:",
+        f"- Phone: {phone_display}",
+        f"- Recognized Patient Name: {name_display}",
+        f"- Total Prior Calls Recorded: {total}",
+        f"- Most Recent Call: {history.get('last_call_date')}",
+        "- Recent Call History (most recent first):",
+    ]
+
+    for i, c in enumerate(history.get("past_calls", []), 1):
+        lines.append(
+            f"  * Call {i} ({c['date']}): Concern: {c['intent']} | Dept: {c['department'] or 'N/A'} | Appt: {c['appointment']} | Urgency: {c['urgency']}"
+        )
+
+    lines.extend(
+        [
+            "",
+            "RETURNING CALLER INTAKE RULES:",
+            "- You recognize this caller. Do NOT ask for information you already have unless they wish to change it.",
+            f"- The patient's name on file is: {name_display}.",
+            "- If the caller asks about previous visits, appointments, or ongoing symptoms, reference the details above.",
+            "- Maintain clinical warmth, efficiency, and continuity of care.",
+        ]
+    )
+
+    return "\n".join(lines)

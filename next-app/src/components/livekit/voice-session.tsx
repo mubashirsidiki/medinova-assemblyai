@@ -24,14 +24,35 @@ interface CapturedCallData {
 	roomName: string | null;
 }
 
-export function VoiceSession({ botName }: { botName: string }) {
-	return <VoiceSessionInner botName={botName} />;
+export function VoiceSession({
+	botName,
+	defaultCallerPhone = "+1 484 481 2043",
+}: {
+	botName: string;
+	defaultCallerPhone?: string;
+}) {
+	return (
+		<VoiceSessionInner
+			botName={botName}
+			defaultCallerPhone={defaultCallerPhone}
+		/>
+	);
 }
 
-function VoiceSessionInner({ botName }: { botName: string }) {
+function VoiceSessionInner({
+	botName,
+	defaultCallerPhone = "+1 484 481 2043",
+}: {
+	botName: string;
+	defaultCallerPhone?: string;
+}) {
+	const [callerPhone] = useState(defaultCallerPhone);
 	const tokenSource = useMemo(
-		() => TokenSource.endpoint("/api/livekit/token"),
-		[],
+		() =>
+			TokenSource.endpoint(
+				`/api/livekit/token?callerPhone=${encodeURIComponent(callerPhone)}`,
+			),
+		[callerPhone],
 	);
 	const session = useSession(tokenSource);
 
@@ -40,17 +61,24 @@ function VoiceSessionInner({ botName }: { botName: string }) {
 			isConnected: session.isConnected,
 			connectionState: session.connectionState,
 			room: session.room?.name ?? null,
+			callerPhone,
 		});
-	}, [session.isConnected, session.connectionState, session.room]);
+	}, [session.isConnected, session.connectionState, session.room, callerPhone]);
 
 	return (
 		<AgentSessionProvider session={session}>
-			<ViewController botName={botName} />
+			<ViewController botName={botName} callerPhone={callerPhone} />
 		</AgentSessionProvider>
 	);
 }
 
-function ViewController({ botName }: { botName: string }) {
+function ViewController({
+	botName,
+	callerPhone,
+}: {
+	botName: string;
+	callerPhone?: string;
+}) {
 	const session = useSessionContext();
 	const { isConnected, start, end, room, connectionState } = session;
 	const isConnecting = connectionState === "connecting";
@@ -142,6 +170,7 @@ function ViewController({ botName }: { botName: string }) {
 			{viewState === "welcome" && (
 				<WelcomeView
 					botName={botName}
+					callerPhone={callerPhone}
 					onStartCall={start}
 					isConnecting={isConnecting}
 				/>
