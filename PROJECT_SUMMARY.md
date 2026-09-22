@@ -53,9 +53,9 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 
 | Directory | Role | Description |
 | :--- | :--- | :--- |
-| [**`next-app/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app) | Web Application & API | Next.js 16 App Router application. Houses the patient triage queue, appointment booking calendar, staff rosters, usage metrics, and in-browser voice test lab. |
-| [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Voice AI Agent Service | Python LiveKit Agents SDK worker. Handles bi-directional streaming audio, conversational clinical intake, silence watchdog, caller memory, and post-call classification. |
-| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Local Agent Customizations | Project-level skills (`assemblyai`, `twilio`, `twilio-skills`, `mongodb-*`, `caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations. |
+| [**`next-app/`**](./next-app) | Web Application & API | Next.js 16 App Router application. Houses the patient triage queue, appointment booking calendar, staff rosters, usage metrics, and in-browser voice test lab. |
+| [**`medinova-livekit-agent/`**](./medinova-livekit-agent) | Voice AI Agent Service | Python LiveKit Agents SDK worker. Handles bi-directional streaming audio, conversational clinical intake, silence watchdog, caller memory, and post-call classification. |
+| [**`.agents/`**](./.agents) | Local Agent Customizations | Project-level skills (`assemblyai`, `twilio`, `twilio-skills`, `mongodb-*`, `caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations. |
 
 ---
 
@@ -112,7 +112,7 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 
 For deep technical dives, reference the modular explanation guides created in each subproject:
 
-- **Next.js Web App Documentation**: [**`next-app/explanation/README.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/README.md)
+- **Next.js Web App Documentation**: [**`next-app/explanation/README.md`**](./next-app/explanation/README.md)
   - `01_ARCHITECTURE.md`: Next.js 16 structure and design system.
   - `02_DATABASE_AND_MODELS.md`: Prisma models and schema structure.
   - `03_AUTHENTICATION_AND_ROLES.md`: Session cookies and role security.
@@ -120,7 +120,7 @@ For deep technical dives, reference the modular explanation guides created in ea
   - `05_LIVEKIT_VOICE_INTEGRATION.md`: WebRTC token minting and test lab.
   - `06_ACTIONS_AND_DATA_FLOW.md`: Server Actions and data fetchers.
 
-- **LiveKit Voice Agent Documentation**: [**`medinova-livekit-agent/explanation/README.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/README.md)
+- **LiveKit Voice Agent Documentation**: [**`medinova-livekit-agent/explanation/README.md`**](./medinova-livekit-agent/explanation/README.md)
   - `01_AGENT_ARCHITECTURE.md`: Worker lifecycle and session model.
   - `02_SPEECH_AND_AI_PIPELINE.md`: Realtime speech pipeline and noise cancellation.
   - `03_CONVERSATIONAL_FLOW_AND_PROMPTS.md`: Intake rules and emergency protocols.

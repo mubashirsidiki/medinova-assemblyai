@@ -8,12 +8,12 @@ This directory provides a persistent, complete technical blueprint of the `next-
 
 | File | Description |
 | :--- | :--- |
-| [**`01_ARCHITECTURE.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/01_ARCHITECTURE.md) | High-level system design, Next.js 16 App Router setup, directory map, styling, and motion config. |
-| [**`02_DATABASE_AND_MODELS.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/02_DATABASE_AND_MODELS.md) | MongoDB database layer, Prisma schemas, relationships, and indexing. |
-| [**`03_AUTHENTICATION_AND_ROLES.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/03_AUTHENTICATION_AND_ROLES.md) | Session cookies (`voicecare_session`), PBKDF2 password hashing, RBAC (`admin` vs `user`), and route protection proxy. |
-| [**`04_ROUTES_AND_PAGES.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/04_ROUTES_AND_PAGES.md) | Full route map: Public marketing/auth pages, User clinical portal, Admin operations portal, and API endpoints. |
-| [**`05_LIVEKIT_VOICE_INTEGRATION.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/05_LIVEKIT_VOICE_INTEGRATION.md) | WebRTC voice connection flow, LiveKit room token minting, agent webhook ingress, and browser test lab. |
-| [**`06_ACTIONS_AND_DATA_FLOW.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/explanation/06_ACTIONS_AND_DATA_FLOW.md) | Server Actions, Zod validation schemas, data access layer (`src/lib/data.ts`), and cache revalidation. |
+| [**`01_ARCHITECTURE.md`**](./01_ARCHITECTURE.md) | High-level system design, Next.js 16 App Router setup, directory map, styling, and motion config. |
+| [**`02_DATABASE_AND_MODELS.md`**](./02_DATABASE_AND_MODELS.md) | MongoDB database layer, Prisma schemas, relationships, and indexing. |
+| [**`03_AUTHENTICATION_AND_ROLES.md`**](./03_AUTHENTICATION_AND_ROLES.md) | Session cookies (`voicecare_session`), PBKDF2 password hashing, RBAC (`admin` vs `user`), and route protection proxy. |
+| [**`04_ROUTES_AND_PAGES.md`**](./04_ROUTES_AND_PAGES.md) | Full route map: Public marketing/auth pages, User clinical portal, Admin operations portal, and API endpoints. |
+| [**`05_LIVEKIT_VOICE_INTEGRATION.md`**](./05_LIVEKIT_VOICE_INTEGRATION.md) | WebRTC voice connection flow, LiveKit room token minting, agent webhook ingress, and browser test lab. |
+| [**`06_ACTIONS_AND_DATA_FLOW.md`**](./06_ACTIONS_AND_DATA_FLOW.md) | Server Actions, Zod validation schemas, data access layer (`src/lib/data.ts`), and cache revalidation. |
 
 ---
 

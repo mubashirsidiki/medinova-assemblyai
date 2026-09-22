@@ -114,4 +114,4 @@ next-app/
 ---
 
 ## 🧪 Testing & Verification
-For full testing procedures, refer to [**`docs/testing.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app/docs/testing.md).
+For full testing procedures, refer to [**`docs/testing.md`**](./docs/testing.md).

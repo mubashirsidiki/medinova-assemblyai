@@ -34,7 +34,7 @@ The following product areas were verified during implementation:
 
 - Node.js: `v24.13.1`
 - npm: `11.10.1`
-- Project root: `c:\Users\Hp\Desktop\Stuff\Clout\Potfolio\Health Bot\next-app`
+- Project root: `next-app/`
 
 ### Required Environment Variables
 

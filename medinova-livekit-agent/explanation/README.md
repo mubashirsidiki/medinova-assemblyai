@@ -8,12 +8,12 @@ This directory contains persistent, comprehensive technical documentation for th
 
 | File | Description |
 | :--- | :--- |
-| [**`01_AGENT_ARCHITECTURE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/01_AGENT_ARCHITECTURE.md) | LiveKit Agents SDK lifecycle, WebRTC worker session model, process prewarming, and SIP telephony support. |
-| [**`02_SPEECH_AND_AI_PIPELINE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/02_SPEECH_AND_AI_PIPELINE.md) | Decoupled voice pipeline (AssemblyAI STT, OpenAI LLM, Inworld TTS), Silero VAD, BVC noise cancellation, AssemblyAI multilingual STT, and English voice synthesis. |
-| [**`03_CONVERSATIONAL_FLOW_AND_PROMPTS.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/03_CONVERSATIONAL_FLOW_AND_PROMPTS.md) | Healthcare intake protocol, department routing, emergency triage (911), inactivity watchdog, and call termination rules. |
-| [**`04_POST_CALL_CLASSIFICATION.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/04_POST_CALL_CLASSIFICATION.md) | Post-call analysis using GPT-4.1-mini, Pydantic schema (`CallClassification`), urgency ratings, spam detection, and extracted next steps. |
-| [**`05_INTEGRATION_AND_PERSISTENCE.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/05_INTEGRATION_AND_PERSISTENCE.md) | Direct MongoDB persistence (`CallRecord`), dynamic `BotSettings` synchronization, and webhook notification to `next-app`. |
-| [**`06_DEPLOYMENT_AND_CLI.md`**](file:///C:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent/explanation/06_DEPLOYMENT_AND_CLI.md) | LiveKit CLI commands (`lk agent deploy`), Docker container setup via `uv`, and environment variable configuration. |
+| [**`01_AGENT_ARCHITECTURE.md`**](./01_AGENT_ARCHITECTURE.md) | LiveKit Agents SDK lifecycle, WebRTC worker session model, process prewarming, and SIP telephony support. |
+| [**`02_SPEECH_AND_AI_PIPELINE.md`**](./02_SPEECH_AND_AI_PIPELINE.md) | Decoupled voice pipeline (AssemblyAI STT, OpenAI LLM, Inworld TTS), Silero VAD, BVC noise cancellation, AssemblyAI multilingual STT, and English voice synthesis. |
+| [**`03_CONVERSATIONAL_FLOW_AND_PROMPTS.md`**](./03_CONVERSATIONAL_FLOW_AND_PROMPTS.md) | Healthcare intake protocol, department routing, emergency triage (911), inactivity watchdog, and call termination rules. |
+| [**`04_POST_CALL_CLASSIFICATION.md`**](./04_POST_CALL_CLASSIFICATION.md) | Post-call analysis using GPT-4.1-mini, Pydantic schema (`CallClassification`), urgency ratings, spam detection, and extracted next steps. |
+| [**`05_INTEGRATION_AND_PERSISTENCE.md`**](./05_INTEGRATION_AND_PERSISTENCE.md) | Direct MongoDB persistence (`CallRecord`), dynamic `BotSettings` synchronization, and webhook notification to `next-app`. |
+| [**`06_DEPLOYMENT_AND_CLI.md`**](./06_DEPLOYMENT_AND_CLI.md) | LiveKit CLI commands (`lk agent deploy`), Docker container setup via `uv`, and environment variable configuration. |
 
 ---
 

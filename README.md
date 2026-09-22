@@ -94,10 +94,10 @@
 
 | Path | Description |
 |---|---|
-| [**`next-app/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app) | Next.js 16 App Router clinical dashboard, staff portal, and in-browser voice testing lab. |
-| [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Python LiveKit Agents voice worker with AssemblyAI STT, Inworld TTS, and caller memory. |
-| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Project skills (`assemblyai`, `twilio`, `mongodb-*`, `livekit-agents`). |
-| [**`PROJECT_SUMMARY.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/PROJECT_SUMMARY.md) | Technical architecture overview and system specifications. |
+| [**`next-app/`**](./next-app) | Next.js 16 App Router clinical dashboard, staff portal, and in-browser voice testing lab. |
+| [**`medinova-livekit-agent/`**](./medinova-livekit-agent) | Python LiveKit Agents voice worker with AssemblyAI STT, Inworld TTS, and caller memory. |
+| [**`.agents/`**](./.agents) | Project skills (`assemblyai`, `twilio`, `mongodb-*`, `livekit-agents`). |
+| [**`PROJECT_SUMMARY.md`**](./PROJECT_SUMMARY.md) | Technical architecture overview and system specifications. |
 
 ---
 
@@ -158,4 +158,4 @@ DASHBOARD_URL="http://localhost:3000"
 
 ## 📄 License
 Copyright © 2026 Mubashir Ahmed Siddiqui / Medinova Health. All Rights Reserved.  
-Proprietary and Confidential. Unauthorized copying, distribution, or commercial use is strictly prohibited. See [LICENSE](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/LICENSE) for evaluation terms.
+Proprietary and Confidential. Unauthorized copying, distribution, or commercial use is strictly prohibited. See [LICENSE](./LICENSE) for evaluation terms.
