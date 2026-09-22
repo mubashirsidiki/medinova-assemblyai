@@ -614,3 +614,24 @@
 		font-size: 1.6rem;
 	}
 }
+
+.landingDisclaimer {
+	max-width: 900px;
+	margin: 48px auto 24px;
+	padding: 16px 24px;
+	border-radius: 12px;
+	background: #f1f4fb;
+	border: 1px solid var(--line);
+	font-size: 0.84rem;
+	line-height: 1.6;
+	color: var(--muted);
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.landingDisclaimer strong {
+	color: var(--text);
+	font-weight: 700;
+	font-size: 0.86rem;
+}

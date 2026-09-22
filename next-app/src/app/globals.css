@@ -5,7 +5,7 @@
 	--line: #e5eaf2;
 	--line-2: #edf1f7;
 	--text: #232833;
-	--muted: #8f97a5;
+	--muted: #596375;
 	--blue: #3b6cff;
 	--blue-2: #6f8fff;
 	--yellow: #f3b21f;
@@ -68,6 +68,11 @@ textarea {
 
 button {
 	cursor: pointer;
+}
+
+:focus-visible {
+	outline: 2px solid var(--blue);
+	outline-offset: 2px;
 }
 
 .shell {

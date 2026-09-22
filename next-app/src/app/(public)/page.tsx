@@ -94,21 +94,12 @@ export default function LandingPage() {
 						variants={v.fadeInUp}
 						transition={{ ...t, delay: 0.65 }}
 					>
-						<motion.button
-							type="button"
-							className={styles.landingBtnPrimary}
-							whileHover={
-								reduced
-									? {}
-									: {
-											scale: 1.03,
-											boxShadow: "0 8px 28px rgba(59,108,255,0.35)",
-										}
-							}
-							whileTap={reduced ? {} : { scale: 0.98 }}
-						>
+						<Link href="/contact" className={styles.landingBtnPrimary}>
 							Book a free discovery call with us
-						</motion.button>
+						</Link>
+						<a href="tel:+14844812043" className={styles.landingBtnSecondary}>
+							Call Agent: +1 (484) 481-2043
+						</a>
 					</motion.div>
 				</motion.div>
 				<motion.div
@@ -232,9 +223,9 @@ export default function LandingPage() {
 						</div>
 						<h3>Real-Time Analytics &amp; Compliance</h3>
 						<p>
-							Live dashboards track every call, flag urgent cases, and maintain
-							enterprise healthcare data protection standards. Full audit trail,
-							always compliant.
+							Live dashboards track every call, flag urgent cases, and support
+							clinical data workflows with full audit logging and AssemblyAI
+							transcription.
 						</p>
 					</motion.div>
 				</div>
@@ -330,7 +321,7 @@ export default function LandingPage() {
 					variants={v.fadeIn}
 					transition={t}
 				>
-					Trusted by clinics, hospitals, and healthcare networks
+					Engineered for clinics, outpatient centers, and healthcare networks
 				</motion.p>
 				<motion.div
 					className={styles.landingTrustStats}
@@ -373,6 +364,18 @@ export default function LandingPage() {
 				</motion.p>
 			</motion.section>
 
+			{/* Medical & Emergency Safety Notice */}
+			<div className={styles.landingDisclaimer}>
+				<strong>Medical &amp; Emergency Disclaimer</strong>
+				<span>
+					Medinova Health is an administrative voice AI assistant for patient
+					intake and appointment scheduling. It does not provide medical
+					diagnosis, clinical treatment, or emergency triage. If you are
+					experiencing a medical emergency, please call 911 (US) or 999 (UK)
+					immediately.
+				</span>
+			</div>
+
 			{/* Footer */}
 			<motion.footer
 				className={styles.landingFooter}
@@ -382,7 +385,12 @@ export default function LandingPage() {
 				transition={{ duration: 0.5 }}
 			>
 				<div className={styles.landingFooterBrand}>
-					<Image src="/medinova.svg" alt="" width={22} height={22} />
+					<Image
+						src="/medinova.svg"
+						alt="Medinova logo"
+						width={22}
+						height={22}
+					/>
 					<span>Medinova Health Network</span>
 				</div>
 				<div className={styles.landingFooterLinks}>

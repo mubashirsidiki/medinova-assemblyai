@@ -21,9 +21,9 @@
 }
 
 .legalContent p {
-	font-size: 0.92rem;
+	font-size: 0.95rem;
 	line-height: 1.7;
-	color: var(--muted);
+	color: var(--text);
 }
 
 .legalBack {
