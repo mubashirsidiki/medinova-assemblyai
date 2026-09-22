@@ -54,7 +54,36 @@ The assistant operates under strict clinical boundaries encoded in `ASSISTANT_DE
 
 ---
 
-## 3. Department Routing Catalog
+## 3. Returning Patient Intake Sequence
+
+When a caller's phone number matches prior call history in MongoDB Atlas, the agent switches to an accelerated, context-aware flow:
+
+```
+1. Personalized Greeting ("Hello Jacob! Welcome back to Medinova Health.")
+       │
+       ▼
+2. Contextual Symptom Inquiry ("How is your knee feeling after that fall?")
+       │
+       ▼
+3. Determine Follow-up Need (Check if existing booking or new slot required)
+       │
+       ▼
+4. Propose Available Appointment Slot
+       │
+       ▼
+5. Confirm Booking Details
+       │
+       ▼
+6. Mandatory Final Check -> Warm Goodbye -> End Call Tool
+```
+
+### Returning Caller Prompt Rules:
+- The recognized caller name on file is pre-populated. Do NOT ask for information already stored unless the patient asks to update it.
+- Prior visit dates, past triage urgencies, and chief complaints are accessible to the LLM for natural clinical continuity.
+
+---
+
+## 4. Department Routing Catalog
 
 | Department | Clinical Scope | Operating Availability |
 | :--- | :--- | :--- |
@@ -66,7 +95,7 @@ The assistant operates under strict clinical boundaries encoded in `ASSISTANT_DE
 
 ---
 
-## 4. Call Ending Rules (`EndCallTool`)
+## 5. Call Ending Rules (`EndCallTool`)
 The assistant terminates calls using LiveKit's built-in `EndCallTool`:
 ```python
 tools=[
@@ -87,7 +116,7 @@ tools=[
 
 ---
 
-## 5. Inactivity Watchdog (`_user_presence_loop`)
+## 6. Inactivity Watchdog (`_user_presence_loop`)
 Handles dropped connections or caller silence without hanging up abruptly:
 - `WAIT_FOR_USER_SECONDS = 15`
 1. After 15 seconds of silence:

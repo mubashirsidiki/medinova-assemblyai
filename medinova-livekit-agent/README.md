@@ -18,6 +18,7 @@ This agent uses a decoupled voice pipeline with native speech-to-text, reasoning
 
 ## Key Features
 
+- **Caller Memory & Continuity:** Recognizes returning callers by phone number, loads previous call transcripts, chief complaints, and appointments from MongoDB Atlas, and greets recognized patients naturally by name.
 - **Department Routing:** Recommends the appropriate clinical department (Cardiology, General Medicine, Endocrinology, Obstetrics, Pediatrics) based on caller symptoms
 - **Appointment Scheduling:** Suggests appointment dates/times within the department's working hours and confirms with the caller
 - **Clinical Boundaries:** Strictly refuses to provide medical advice or diagnoses, redirecting caller to intake

@@ -66,4 +66,7 @@ next-app/prisma/seed.mjs
 next-app/prisma/seed*.mjs*
 next-app/prisma/*.bak
 *.ps1
+
+# Hyperframes video render outputs
+brag-output/
 

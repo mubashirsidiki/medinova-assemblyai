@@ -64,13 +64,18 @@ def prewarm(proc: JobProcess):
 - Connects to room via `await ctx.connect()`.
 - Awaits incoming participant with 90-second timeout (`ctx.wait_for_participant()`).
 
-### 2. Configuration Bootstrapping
+### 2. Configuration Bootstrapping & Caller Memory
 - Checks MongoDB for custom instructions (`fetch_agent_config()`).
 - If found, prefixes instructions with live UTC timestamp:
   ```python
   instructions = f"Current date and time: {datetime.now(timezone.utc).isoformat()}\n\n{instructions}"
   ```
 - Falls back to `ASSISTANT_DEFAULT_INSTRUCTIONS` if database is unpopulated or unreachable.
+- **Caller Identity Resolution & Memory Retrieval**:
+  - Extracts the caller's phone number from participant metadata or SIP headers (`resolve_caller_phone(participant)`).
+  - Queries MongoDB Atlas via `fetch_caller_history(caller_phone)` to check for prior call records or patient profiles.
+  - If a returning patient is recognized, appends formatted clinical history and past appointment context (`build_returning_caller_context(history)`) directly into the active LLM instructions.
+  - Allows the assistant to greet the patient by name immediately and continue past care discussions without redundant intake questions.
 
 ### 3. Session Initialization
 - Instantiates `AgentSession`:

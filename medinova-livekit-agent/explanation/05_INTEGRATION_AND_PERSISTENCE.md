@@ -43,9 +43,34 @@ call_record = {
 }
 ```
 
+### Relational Side-Effects:
+When `save_call_record` runs, if an appointment slot was scheduled (`appointmentDate` present), the agent automatically:
+1. Resolves or creates a `Patient` document in MongoDB with the normalized phone and caller name.
+2. Creates an `Appointment` document linked to the `organizationId`, `patientId`, and `recommendedDepartment`.
+3. Creates a staff `Notification` in the database to alert clinic personnel to the newly booked visit.
+
 ---
 
-## 3. Dynamic Configuration Fetching (`fetch_agent_config`)
+## 3. Caller History & Memory (`fetch_caller_history`)
+
+When an incoming SIP or WebRTC participant connects, the worker resolves their caller phone number and inspects the database:
+
+```python
+def fetch_caller_history(caller_phone: str) -> dict | None:
+    # 1. Normalizes phone numbers (E.164, local digits, stripped punctuation)
+    # 2. Queries CallRecord collection matching any normalized phone variation
+    # 3. Resolves caller name from past records or linked Patient documents
+    # 4. Aggregates past call dates, departments, complaints, and urgency
+```
+
+### Context Injection (`build_returning_caller_context`)
+Formats the historical data into a structured instruction block appended to the LLM system instructions:
+- Displays previous visit dates, departments, and chief complaints.
+- Instructs the assistant to acknowledge the returning patient and avoid redundant intake questions.
+
+---
+
+## 4. Dynamic Configuration Fetching (`fetch_agent_config`)
 On startup and room dispatch, the agent inspects the `BotSettings` collection:
 ```python
 def fetch_agent_config() -> dict:
@@ -61,7 +86,7 @@ def fetch_agent_config() -> dict:
 
 ---
 
-## 4. HTTP Webhook Notification (`_notify_dashboard`)
+## 5. HTTP Webhook Notification (`_notify_dashboard`)
 Dispatched in a non-blocking daemon thread:
 - **Target URL**: `${DASHBOARD_URL}/api/livekit/notify`
 - **Auth Header**: `Authorization: Bearer <JWT_SECRET>`

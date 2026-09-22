@@ -1,14 +1,13 @@
 # Medinova Health — Project Summary
 
 **Medinova Health Network** is an enterprise AI healthcare platform designed to automate patient phone intake, clinical triage, department routing, and appointment scheduling.
-
-Live Deployment: `https://<dashboard-domain>.vercel.app/`
+Live Deployment: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
 
 ---
 
 ## 1. System Overview
 
-Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency, conversational AI receptionist. The platform pairs a real-time Python voice agent worker with a Next.js clinical dashboard.
+Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency, conversational AI receptionist. The platform pairs a real-time Python voice agent worker with a Next.js clinical dashboard and features persistent caller memory across visits.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -22,17 +21,18 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 │                 (WebRTC SFU / Media Server)                 │
 └──────────────────────────────┬──────────────────────────────┘
                                │
-            ┌──────────────────┴──────────────────┐
-            │ Room Events                         │ WebRTC Tokens
-            ▼                                     ▼
+             ┌─────────────────┴──────────────────┐
+             │ Room Events                        │ WebRTC Tokens
+             ▼                                    ▼
 ┌──────────────────────────────┐        ┌─────────────────────┐
 │    medinova-livekit-agent    │        │      next-app       │
 │  (Python LiveKit Worker)     │        │ (Next.js Dashboard) │
 │                              │        │                     │
 │  • AssemblyAI STT (U3.5 Pro) │        │ • Clinical Portal   │
-│  • OpenAI LLM (gpt-4o-mini)  │        │ • Admin Controls    │
-│  • Inworld TTS (2.0 Flash)   │        │ • In-Browser Lab    │
-│  • Silero VAD + BVC Audio    │        │ • Prisma ORM        │
+│  • Returning Caller Memory   │        │ • Admin Controls    │
+│  • OpenAI LLM (gpt-4o-mini)  │        │ • In-Browser Lab    │
+│  • Inworld TTS (2.0 Flash)   │        │ • Prisma ORM        │
+│  • Silero VAD + BVC Audio    │        │                     │
 │  • GPT-4.1-mini Triage       │        │                     │
 └──────────────┬───────────────┘        └──────────┬──────────┘
                │                                   │
@@ -51,8 +51,9 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 | Directory | Role | Description |
 | :--- | :--- | :--- |
 | [**`next-app/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app) | Web Application & API | Next.js 16 App Router application. Houses the patient triage queue, appointment booking calendar, staff rosters, usage metrics, and in-browser voice test lab. |
-| [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Voice AI Agent Service | Python LiveKit Agents SDK worker. Handles bi-directional streaming audio, conversational clinical intake, silence watchdog, and post-call classification. |
-| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Local Agent Customizations | Project-level skills (`caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations (`livekit-docs`). |
+| [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Voice AI Agent Service | Python LiveKit Agents SDK worker. Handles bi-directional streaming audio, conversational clinical intake, silence watchdog, caller memory, and post-call classification. |
+| [**`brag-output/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output) | Launch Video & Media | Hyperframes 1080p product launch video (`brag.mp4`), poster thumbnail (`brag.jpg`), storyboards, and social launch copy. |
+| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Local Agent Customizations | Project-level skills (`assemblyai`, `twilio`, `twilio-skills`, `mongodb-*`, `brag`, `caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations. |
 
 ---
 
@@ -63,17 +64,22 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 - Route patients to five clinical departments: **Cardiology**, **General Medicine**, **Endocrinology**, **Obstetrics**, and **Pediatrics**.
 - Check clinic hours and propose appointment slots directly during the call.
 
-### 2. Clinical Safeguards & Emergency Escalation
+### 2. Caller Memory & Returning Patient Continuity
+- Recognizes returning callers by phone number on incoming SIP or WebRTC sessions.
+- Injects prior visit context (past call dates, chief complaints, booked appointments, clinical urgency) into the active prompt session.
+- Greets recognized patients by name ("Welcome back, Jacob!") and follows up on existing symptoms without asking redundant intake questions.
+
+### 3. Clinical Safeguards & Emergency Escalation
 - **Strict Clinical Boundary**: The assistant refuses to provide medical advice, diagnoses, or prescriptions.
 - **Emergency Triage**: If callers describe chest pain, severe bleeding, or stroke signs, the assistant immediately instructs them to dial **999** (UK) or **112** (Germany).
 - **Multilingual Support**: Default British English with automatic fluent fallback to German or other languages.
 
-### 3. Post-Call AI Triage
+### 4. Post-Call AI Triage
 - Asynchronously processes transcripts using **OpenAI GPT-4.1-mini**.
 - Extracts 12 structured fields: Spam detection (`SPAM`, `NOT_SPAM`), urgency rating (`URGENT`, `HIGH`, `MEDIUM`, `LOW`), callback necessity, and next steps.
-- Directly updates MongoDB `CallRecord` collection and dispatches webhooks to the dashboard.
+- Directly updates MongoDB `CallRecord` collection, automatically creates or updates `Patient` and `Appointment` documents, and dispatches webhooks to the dashboard.
 
-### 4. Healthcare Operations Dashboard
+### 5. Healthcare Operations Dashboard
 - **User Portal (`/user/*`)**: Active triage queue, call search, transcript inspection, booking calendar, practice analytics, and voice testing lab.
 - **Admin Portal (`/admin/*`)**: Multi-clinic routing, bot orchestration, staff duty shifts, and cloud infrastructure cost tracking.
 - **Role-Based Access**: PBKDF2 password hashing with secure HTTP-only session cookies.
