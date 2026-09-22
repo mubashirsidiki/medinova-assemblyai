@@ -56,7 +56,7 @@ Accounts for system login and authentication.
 
 ### 4. `Patient`
 Practice patients receiving care or making appointments.
-- Fields: `name`, `preferredLanguage` (e.g. English, Polish, Urdu), `riskLevel` ("standard", "high", "urgent").
+- Fields: `name`, `preferredLanguage` (default: English), `riskLevel` ("standard", "high", "urgent").
 - **Relations**: Linked to `CallRecord`, `Appointment`, and `Notification`.
 
 ### 5. `CallRecord`

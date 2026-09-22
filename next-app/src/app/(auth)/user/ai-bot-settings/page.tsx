@@ -71,7 +71,7 @@ export default async function AIBotSettingsPage() {
 								<input
 									id="language"
 									name="language"
-									defaultValue="British English, German"
+									defaultValue="British English"
 									disabled
 									required
 								/>

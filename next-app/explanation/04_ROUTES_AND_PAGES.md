@@ -87,7 +87,7 @@ Protected by `requireSession("user")`. Rendered within `src/components/app-shell
 - Call volume distribution across days and hours.
 - Breakdown of caller intents (Prescriptions, Cardiology, Urgent Triage, Billing).
 - Latency percentiles and average response time tracking.
-- Caller language breakdown (English, Polish, Urdu, Punjabi).
+- Caller triage and language telemetry.
 
 ### `/user/costs`
 - Daily cost history and cumulative monthly spending.

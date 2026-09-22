@@ -25,10 +25,10 @@ The project is configured for serverless hosting on LiveKit Cloud:
 
 ```toml
 [project]
-  subdomain = "medinova-6ynzszog"
+  subdomain = "assemblyai-txp4mw4u"
 
 [agent]
-  id = "CA_PC7up6grPBpT"
+  id = "CA_RpXEQwVnkFeY"
 ```
 
 ### Deployment Commands:

@@ -15,15 +15,14 @@ The assistant operates under strict clinical boundaries encoded in `ASSISTANT_DE
    - Refusal script: *"I'm not able to provide medical advice, but I can make sure the right department reviews your case."*
 2. **Emergency Triage Protocol**:
    - Symptoms: Chest pain, shortness of breath, severe bleeding, signs of stroke, acute allergic reactions.
-   - Script (UK): Directs caller to dial **999** immediately.
-   - Script (German): *"Bitte rufen Sie sofort den Notruf 112 an."*
+   - Script: Directs caller to immediately hang up and dial **911**.
 
 ---
 
 ## 2. Standard Patient Intake Sequence
 
 ```
-1. Warm Greeting & Offer Help
+1. Warm Greeting & AI/Recording Notice ("This call is recorded and assisted by an AI receptionist...")
        │
        ▼
 2. Collect & Confirm Caller Name

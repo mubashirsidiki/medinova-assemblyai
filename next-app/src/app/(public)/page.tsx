@@ -371,8 +371,7 @@ export default function LandingPage() {
 					Medinova Health is an administrative voice AI assistant for patient
 					intake and appointment scheduling. It does not provide medical
 					diagnosis, clinical treatment, or emergency triage. If you are
-					experiencing a medical emergency, please call 911 (US) or 999 (UK)
-					immediately.
+					experiencing a medical emergency, please call 911 immediately.
 				</span>
 			</div>
 

@@ -27,3 +27,9 @@
 - **Project scope only**: Whenever asked to add or configure a skill, MCP server, plugin, or rule:
   - Add or update them exclusively at the project/workspace level (e.g., in `.agents/`, local `mcp_config.json`, or repository `AGENTS.md`).
   - **NEVER modify global configurations or user-level rules** (e.g., `~/.gemini/` or global config directories).
+
+## 6. LiveKit CLI Command Prohibition
+- **No `lk` commands**: You are STRICTLY PROHIBITED from executing any `lk` CLI commands (e.g., `lk agent deploy`, `lk agent logs`, `lk project`, `lk room`, `lk token`, etc.).
+- NEVER run `lk` commands on behalf of the user.
+- If deployment, logs, or LiveKit management is required, always provide the exact command and instruction for the user to run it themselves in their own terminal.
+

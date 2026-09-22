@@ -52,11 +52,11 @@ audio_input=room_io.AudioInputOptions(
 
 ---
 
-## 5. Multilingual Voice Support
-- **Default Language**: British English with clear pronunciation.
-- **German Language Handling**:
-  - The model auto-detects German callers and switches to fluent German immediately.
-  - Switches emergency phrase to: *"Bitte rufen Sie sofort den Notruf 112 an."*
-- **Other Languages (e.g., Urdu, Polish, Punjabi)**:
-  - Agent attempts to comprehend and respond in the caller's language.
-  - If comprehension confidence is low, gently prompts the caller to proceed in English.
+## 5. Multilingual STT Comprehension & English-Only Voice Standard
+- **AssemblyAI Universal 3.5 Pro Multilingual STT**:
+  - Demonstrates the multilingual power of AssemblyAI: Callers may speak in any language (e.g., German, Spanish, French, Urdu, Arabic).
+  - The AssemblyAI streaming pipeline transcribes and captures caller speech in real time with high fidelity.
+- **English-Only Synthesis Protocol**:
+  - While comprehending any language input, the agent is instruction-tuned to **always formulate and speak its responses strictly in clear British English**.
+  - The agent never shifts TTS synthesis or audio output to secondary languages.
+  - Callers are naturally assisted in English without being asked to switch languages, keeping the clinical workflow seamless, accessible, and standardized.

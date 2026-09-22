@@ -1,7 +1,10 @@
 # Medinova Health — Project Summary
 
 **Medinova Health Network** is an enterprise AI healthcare platform designed to automate patient phone intake, clinical triage, department routing, and appointment scheduling.
-Live Deployment: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
+
+- **Live Web Portal**: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
+- **Live Inbound Telephony**: [`+1 (484) 481-2043`](tel:+14844812043)
+- **LiveKit Cloud Production Agent**: `CA_RpXEQwVnkFeY` (Project: `assemblyai-txp4mw4u`)
 
 ---
 
@@ -52,8 +55,7 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 | :--- | :--- | :--- |
 | [**`next-app/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app) | Web Application & API | Next.js 16 App Router application. Houses the patient triage queue, appointment booking calendar, staff rosters, usage metrics, and in-browser voice test lab. |
 | [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Voice AI Agent Service | Python LiveKit Agents SDK worker. Handles bi-directional streaming audio, conversational clinical intake, silence watchdog, caller memory, and post-call classification. |
-| [**`brag-output/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output) | Launch Video & Media | Hyperframes 1080p product launch video (`brag.mp4`), poster thumbnail (`brag.jpg`), storyboards, and social launch copy. |
-| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Local Agent Customizations | Project-level skills (`assemblyai`, `twilio`, `twilio-skills`, `mongodb-*`, `brag`, `caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations. |
+| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Local Agent Customizations | Project-level skills (`assemblyai`, `twilio`, `twilio-skills`, `mongodb-*`, `caveman`, `livekit-agents`, `livekit-simulations`) and MCP configurations. |
 
 ---
 
@@ -71,8 +73,8 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 
 ### 3. Clinical Safeguards & Emergency Escalation
 - **Strict Clinical Boundary**: The assistant refuses to provide medical advice, diagnoses, or prescriptions.
-- **Emergency Triage**: If callers describe chest pain, severe bleeding, or stroke signs, the assistant immediately instructs them to dial **999** (UK) or **112** (Germany).
-- **Multilingual Support**: Default British English with automatic fluent fallback to German or other languages.
+- **Emergency Triage**: If callers describe chest pain, severe bleeding, or stroke signs, the assistant immediately instructs them to dial **911** immediately.
+- **Multilingual Comprehension & English-Only Response**: Showcasing the power of AssemblyAI's Universal 3.5 Pro streaming STT, callers may speak in any language (e.g., German, Spanish, French, Urdu). The assistant accurately transcribes and comprehends their concern, but always responds strictly in clear British English, logging the caller's spoken language for clinician review.
 
 ### 4. Post-Call AI Triage
 - Asynchronously processes transcripts using **OpenAI GPT-4.1-mini**.

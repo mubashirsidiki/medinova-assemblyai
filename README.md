@@ -11,12 +11,11 @@
 
 ---
 
-## 🎬 Product Launch Video
+## 📞 Try It Live
 
-Check out the product launch video generated via Hyperframes:
-- **Video**: [brag-output/brag.mp4](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output/brag.mp4) (1080p, 20s, H.264 + AAC, studio voiceover + sound design)
-- **Poster Thumbnail**: [brag-output/brag.jpg](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output/brag.jpg)
-- **Social Launch Copy**: [brag-output/share-copy.txt](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output/share-copy.txt)
+- **Direct Inbound Telephony**: Call [`+1 (484) 481-2043`](tel:+14844812043) from any phone to experience conversational patient intake, returning caller memory, and appointment scheduling in real time.
+- **Clinical Web Portal**: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
+- **LiveKit Cloud Agent ID**: `CA_RpXEQwVnkFeY` (Project: `assemblyai-txp4mw4u`)
 
 ---
 
@@ -84,7 +83,7 @@ Check out the product launch video generated via Hyperframes:
 
 ### 5. Strict Clinical Boundaries & Emergency Escalation
 - Refuses to give diagnoses or prescribe medication.
-- Immediately identifies emergency keywords and directs the patient to call emergency services (**999** in the UK, **112** in Germany/EU).
+- Immediately identifies emergency keywords and directs the patient to call emergency services (**911**).
 
 ### 6. Post-Call AI Triage
 - Automatically processes call transcripts via GPT-4.1-mini into 12 structured fields: spam detection, clinical urgency (`URGENT`, `HIGH`, `MEDIUM`, `LOW`), callback necessity, and recommended doctor actions.
@@ -97,8 +96,7 @@ Check out the product launch video generated via Hyperframes:
 |---|---|
 | [**`next-app/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/next-app) | Next.js 16 App Router clinical dashboard, staff portal, and in-browser voice testing lab. |
 | [**`medinova-livekit-agent/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/medinova-livekit-agent) | Python LiveKit Agents voice worker with AssemblyAI STT, Inworld TTS, and caller memory. |
-| [**`brag-output/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/brag-output) | Product launch video composition, 1080p rendered video, poster frame, and social media copy. |
-| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Project skills (`assemblyai`, `twilio`, `mongodb-*`, `livekit-agents`, `brag`). |
+| [**`.agents/`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/.agents) | Project skills (`assemblyai`, `twilio`, `mongodb-*`, `livekit-agents`). |
 | [**`PROJECT_SUMMARY.md`**](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/PROJECT_SUMMARY.md) | Technical architecture overview and system specifications. |
 
 ---
@@ -159,4 +157,5 @@ DASHBOARD_URL="http://localhost:3000"
 ---
 
 ## 📄 License
-Internal project for Medinova Health Network.
+Copyright © 2026 Mubashir Ahmed Siddiqui / Medinova Health. All Rights Reserved.  
+Proprietary and Confidential. Unauthorized copying, distribution, or commercial use is strictly prohibited. See [LICENSE](file:///c:/Users/Hp/Desktop/Stuff/Clout/medinova-assemblyai/LICENSE) for evaluation terms.

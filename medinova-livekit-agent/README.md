@@ -21,12 +21,13 @@ This agent uses a decoupled voice pipeline with native speech-to-text, reasoning
 - **Caller Memory & Continuity:** Recognizes returning callers by phone number, loads previous call transcripts, chief complaints, and appointments from MongoDB Atlas, and greets recognized patients naturally by name.
 - **Department Routing:** Recommends the appropriate clinical department (Cardiology, General Medicine, Endocrinology, Obstetrics, Pediatrics) based on caller symptoms
 - **Appointment Scheduling:** Suggests appointment dates/times within the department's working hours and confirms with the caller
-- **Clinical Boundaries:** Strictly refuses to provide medical advice or diagnoses, redirecting caller to intake
-- **Emergency Triage:** Instantly directs callers describing emergency symptoms to call 999 (UK) or 112 (Germany)
+- **Emergency Triage:** Instantly directs callers describing emergency symptoms to call 911
+- **AI & Call Recording Disclosure:** Explicitly announces upon connection that the call is recorded and assisted by an AI receptionist for care coordination and scheduling
+- **Live Inbound Telephony:** Integrated with Twilio SIP trunking to answer incoming calls directly at `+1 (484) 481-2043`
 - **Call Classification:** Post-call extraction of 12 structured fields including urgency, spam detection, and recommended next steps
 - **Inactivity Handling:** Auto-prompts after 15s silence, ends call after another 15s
 - **Call Ending Rules:** Automatically ends call when off-topic, when caller requests to end, or after intake completion
-- **Multilingual Support:** Default British English with automatic fluent fallback to German or other caller languages
+- **Multilingual STT Comprehension & English Voice:** Powered by AssemblyAI Universal 3.5 Pro, callers can speak in any language; the agent comprehends their intent and responds strictly in clear British English
 - **Prebuilt End Call:** Uses LiveKit's `EndCallTool` for clean call termination
 
 ## Prerequisites
@@ -153,29 +154,27 @@ uv run pytest tests/ -v
 
 | Test | Verifies |
 |---|---|
-| `test_greeting` | Bot greets and offers legal help |
-| `test_legal_advice_refusal` | Bot refuses to give legal advice |
-| `test_collects_contact_info` | Bot collects name and phone |
-| `test_immigration_recommends_lawyer` | Bot recommends immigration solicitor |
-| `test_personal_injury_recommends_lawyer` | Bot recommends PI solicitor |
-| `test_conveyancing_recommends_saghir` | Bot recommends Saghir Ahmad |
-| `test_off_topic_ends_call` | Bot ends call on off-topic |
-| `test_caller_says_goodbye_ends_call` | Bot ends call on goodbye |
-| `test_intake_complete_ends_call` | Bot ends call after intake |
-| `test_language_switch_urdu` | Bot responds in Urdu |
+| `test_empty_caller_history` | Formats empty caller history correctly |
+| `test_caller_history_formatting` | Injects past visits, symptoms, and urgency into prompt context |
+| `test_phone_normalization` | Normalizes incoming SIP caller IDs |
+| `test_agent_constants` | Validates model identifiers and default instructions |
+| `test_inworld_tts_config` | Validates Inworld TTS voice and English language code |
+| `test_assemblyai_stt_config` | Validates AssemblyAI Universal 3.5 Pro STT configuration |
+| `test_chat_llm_config` | Validates OpenAI reasoning model and temperature |
+| `test_classification_model_config` | Validates GPT-4.1-mini post-call classification model |
 
 ---
 
 ## Agent Behavior
 
-- Greets users when they connect
-- Responds to natural speech in real time via OpenAI Realtime API
-- Supports interruptions and turn-taking
+- Greets users when they connect with required AI & recording disclosure
+- Responds to natural speech in real time with low latency
+- Supports interruptions and natural turn-taking via Silero VAD
 - Automatic inactivity detection with re-engagement prompt and call termination
-- Matches the caller's language automatically with East London accent for English
-- Recommends suitable solicitor based on practice areas
-- Suggests appointment date/time based on solicitor availability
-- Post-call classification extracts recommended lawyer and appointment details
+- Operates strictly in British English with professional clinical tone
+- Recommends suitable clinical department based on caller symptoms
+- Suggests appointment date/time based on department availability
+- Post-call classification extracts 12 clinical triage fields to MongoDB Atlas
 - Room lifecycle is managed by LiveKit Cloud
 
 ## Cost Analysis
