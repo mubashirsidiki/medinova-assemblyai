@@ -69,4 +69,7 @@ next-app/prisma/*.bak
 
 # Hyperframes video render outputs
 brag-output/
+
+# Pitch deck and presentation assets
+pitch-deck/
 
