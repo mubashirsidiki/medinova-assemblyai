@@ -1,4 +1,4 @@
-# Medinova Next.js Web App — System Knowledge Base
+# Medinova Next.js Web App - System Knowledge Base
 
 This directory provides a persistent, complete technical blueprint of the `next-app` codebase. When starting a new session or switching LLMs, reference these documents to immediately understand architecture, data models, routes, auth rules, and voice integration without scanning the entire code tree.
 

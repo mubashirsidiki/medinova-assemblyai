@@ -29,7 +29,7 @@ export const BOT_LIVE_NUMBER_STATUS = [
 export const NOTIFY_TARGET_TYPES = ["team_member", "custom_contact"] as const;
 
 /* ===================================================================
-   Input validators — server actions
+   Input validators - server actions
    =================================================================== */
 
 /* login */

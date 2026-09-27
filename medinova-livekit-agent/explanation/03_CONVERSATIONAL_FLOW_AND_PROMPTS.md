@@ -16,6 +16,9 @@ The assistant operates under strict clinical boundaries encoded in `ASSISTANT_DE
 2. **Emergency Triage Protocol**:
    - Symptoms: Chest pain, shortness of breath, severe bleeding, signs of stroke, acute allergic reactions.
    - Script: Directs caller to immediately hang up and dial **911**.
+3. **Multilingual Intake & English Voice Standard**:
+   - The assistant accurately transcribes and comprehends callers in any spoken language via AssemblyAI Universal 3.5 Pro streaming STT.
+   - The assistant always responds strictly in clear British English, keeping clinical intake standardized while logging the caller's spoken language for clinician review.
 
 ---
 

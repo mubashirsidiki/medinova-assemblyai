@@ -37,7 +37,7 @@ export function PostCallView({
 			<div className="voice-post-call-stats">
 				<div className="voice-stat">
 					<strong>
-						{callStartTime != null ? formatDuration(callDuration) : "—"}
+						{callStartTime != null ? formatDuration(callDuration) : " - "}
 					</strong>
 					<small>Duration</small>
 				</div>

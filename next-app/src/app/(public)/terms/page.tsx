@@ -26,8 +26,8 @@ export default function TermsPage() {
 				<h2>1. Service description</h2>
 				<p>
 					Medinova Health provides a voice AI platform for healthcare practices
-					— including call handling, appointment booking, patient triage, and
-					operational analytics — as a software-as-a-service subscription.
+					 - including call handling, appointment booking, patient triage, and
+					operational analytics - as a software-as-a-service subscription.
 				</p>
 
 				<h2>2. Eligibility</h2>

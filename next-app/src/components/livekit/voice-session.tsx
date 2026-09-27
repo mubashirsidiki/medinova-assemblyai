@@ -112,7 +112,7 @@ function ViewController({
 	useEffect(() => {
 		if (isConnected && viewState === "welcome") {
 			callStartTimeRef.current = Date.now();
-			console.log(LOG, "Connected — room:", room?.name);
+			console.log(LOG, "Connected - room:", room?.name);
 			setTimeout(() => {
 				setViewState("connected");
 			}, 0);
@@ -128,7 +128,7 @@ function ViewController({
 	// Detect unexpected disconnect
 	useEffect(() => {
 		if (!isConnected && viewState === "connected") {
-			console.warn(LOG, "Unexpected disconnect — room:", room?.name);
+			console.warn(LOG, "Unexpected disconnect - room:", room?.name);
 			const captured = {
 				transcript: [...transcriptRef.current],
 				callStartTime: callStartTimeRef.current,
@@ -141,9 +141,9 @@ function ViewController({
 		}
 	}, [isConnected, viewState, room]);
 
-	// Intercept manual disconnect — capture transcript BEFORE ending
+	// Intercept manual disconnect - capture transcript BEFORE ending
 	const handleDisconnect = useCallback(() => {
-		console.log(LOG, "Manual disconnect — capturing transcript");
+		console.log(LOG, "Manual disconnect - capturing transcript");
 		setCapturedData({
 			transcript: [...transcriptRef.current],
 			callStartTime: callStartTimeRef.current,

@@ -1,11 +1,18 @@
-# Medinova Health — Clinical Voice AI & Triage Platform
+# Medinova Health - Clinical Voice AI & Triage Platform
 
 > **Never put a patient on hold again.**  
 > Medinova Health is an enterprise clinical voice AI platform that automates patient phone intake, recognizes returning callers with full medical context, performs real-time clinical triage, and schedules appointments directly into the clinic calendar.
 
+<p align="center">
+  <a href="https://medinova-assemblyai.vercel.app">
+    <img src="./assets/medinova-banner.jpg" alt="Medinova Health - Voice AI Banner" width="100%" />
+  </a>
+</p>
+
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-medinova--assemblyai.vercel.app-blue)](https://medinova-assemblyai.vercel.app/)
 [![AssemblyAI](https://img.shields.io/badge/STT-AssemblyAI%20Universal%203.5%20Pro-7c3aed)](https://www.assemblyai.com/)
 [![LiveKit](https://img.shields.io/badge/Realtime-LiveKit%20Agents%20SDK-00e599)](https://livekit.io/)
+[![Telephony](https://img.shields.io/badge/Phone-Inbound%20SIP%20Live-orange)](tel:+14844812043)
 [![Next.js](https://img.shields.io/badge/Dashboard-Next.js%2016-000000)](https://nextjs.org/)
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-00ed64)](https://www.mongodb.com/)
 
@@ -15,7 +22,10 @@
 
 - **Direct Inbound Telephony**: Call [`+1 (484) 481-2043`](tel:+14844812043) from any phone to experience conversational patient intake, returning caller memory, and appointment scheduling in real time.
 - **Clinical Web Portal**: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
-- **LiveKit Cloud Agent ID**: `CA_RpXEQwVnkFeY` (Project: `assemblyai-txp4mw4u`)
+- **How to Test**:
+  1. **Multilingual Intake**: Speak in any language (e.g., Spanish, German, French, Urdu). Notice AssemblyAI's real-time comprehension and the agent's clear English triage response.
+  2. **Caller Memory**: Introduce yourself by name (e.g., *"Hi, I'm Jacob, calling about a sprained ankle"*), then hang up. Call back from the same number - Medinova will greet you by name and reference your prior complaint!
+  3. **Emergency Escalation**: Mention acute symptoms like chest pain or difficulty breathing to trigger immediate 911 escalation.
 
 ---
 
@@ -58,6 +68,19 @@
 
 ---
 
+## 💡 Why AssemblyAI Universal 3.5 Pro?
+
+In clinical phone intake, standard batch or generic STT models fail: they cut patients off mid-sentence, choke on medical terminology, and hallucinate on regional accents or multilingual callers.
+
+Medinova leverages **AssemblyAI Universal 3.5 Pro** natively within LiveKit's streaming pipeline:
+
+- **Punctuation-Based Turn Detection**: Employs real-time punctuation turn detection (`turn_detection="stt"`, `min_turn_silence_ms=100`, `max_turn_silence_ms=1000`). Callers can pause naturally while articulating painful symptoms without the assistant cutting them off prematurely.
+- **Multilingual Patient Comprehension**: Patients can speak in their native tongue - Spanish, French, German, Urdu, and more. AssemblyAI accurately transcribes multilingual audio streams on the fly, allowing the agent to comprehend the clinical intent and respond in compassionate, standardized English.
+- **Medical & Phonetic Fidelity**: Transcribes medication names, anatomical references, and complex symptoms without acoustic degradation.
+- **Sub-Second Streaming Latency**: Delivers ultra-low conversational turnaround over WebSockets for natural, human-cadence phone conversations.
+
+---
+
 ## ⚡ Key Capabilities
 
 ### 1. Caller Memory & Historical Continuity
@@ -66,8 +89,10 @@
 - Greets returning callers naturally by name without redundant questions.
 
 ### 2. Speech-to-Text via AssemblyAI Universal 3.5 Pro
-- Uses AssemblyAI's cutting-edge `universal-3-5-pro` model with punctuation-based turn detection.
-- Sub-second turnaround for conversational real-time voice AI.
+- **Universal 3.5 Pro Streaming STT**: Uses AssemblyAI's state-of-the-art streaming model with real-time punctuation-based turn detection (`turn_detection="stt"`, `min_turn_silence_ms=100`, `max_turn_silence_ms=1000`).
+- **Multilingual Caller Comprehension**: Showcases AssemblyAI's multilingual recognition - patients may speak in any language (e.g., Spanish, French, German, Urdu) with medical-grade transcription accuracy.
+- **Standardized English Response**: While comprehending any incoming language, the voice agent synthesizes its responses in clear, empathetic British English (`inworld-tts-2-flash`) and logs the patient's spoken language for clinician review.
+- **Sub-Second Latency**: Delivers ultra-low conversational turn latency suitable for critical clinical intake.
 
 ### 3. Automated Clinical Department Routing
 - Dynamically routes callers to five specialized departments:

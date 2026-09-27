@@ -1,10 +1,9 @@
-# Medinova Health — Project Summary
+# Medinova Health - Project Summary
 
 **Medinova Health Network** is an enterprise AI healthcare platform designed to automate patient phone intake, clinical triage, department routing, and appointment scheduling.
 
 - **Live Web Portal**: [medinova-assemblyai.vercel.app](https://medinova-assemblyai.vercel.app/)
 - **Live Inbound Telephony**: [`+1 (484) 481-2043`](tel:+14844812043)
-- **LiveKit Cloud Production Agent**: `CA_RpXEQwVnkFeY` (Project: `assemblyai-txp4mw4u`)
 
 ---
 
@@ -91,7 +90,7 @@ Medinova replaces legacy front-desk phone bottlenecks with an ultra-low latency,
 ## 4. Technical Architecture
 
 ### Web Application (`next-app`)
-- **Framework**: Next.js 16.2.4 (App Router) + React 19.2.4 + TypeScript 5
+- **Framework**: Next.js 16.3.4 (App Router) + React 19.2.4 + TypeScript 5
 - **ORM**: Prisma 6.19.1
 - **Database**: MongoDB Atlas
 - **Styling**: Vanilla CSS, CSS Modules, Motion 12, Lucide React

@@ -25,10 +25,10 @@ The project is configured for serverless hosting on LiveKit Cloud:
 
 ```toml
 [project]
-  subdomain = "assemblyai-txp4mw4u"
+  subdomain = "<your-project-subdomain>"
 
 [agent]
-  id = "CA_RpXEQwVnkFeY"
+  id = "<your-agent-id>"
 ```
 
 ### Deployment Commands:

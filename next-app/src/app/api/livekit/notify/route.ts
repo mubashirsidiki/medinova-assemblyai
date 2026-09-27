@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 	const secret = process.env.JWT_SECRET || "";
 
 	if (!token || token !== secret) {
-		console.warn("[LiveKit Notify] Unauthorized attempt — token mismatch");
+		console.warn("[LiveKit Notify] Unauthorized attempt - token mismatch");
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 

@@ -1,4 +1,4 @@
-# Medinova Health — Clinical Dashboard & Web App
+# Medinova Health - Clinical Dashboard & Web App
 
 The Next.js 16 web application and clinical management portal for **Medinova Health Network**.
 

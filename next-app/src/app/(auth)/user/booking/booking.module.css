@@ -134,7 +134,7 @@
 		font-size: 0.8rem;
 	}
 
-	/* Monthly grid — 7 columns, scrollable */
+	/* Monthly grid - 7 columns, scrollable */
 	.bookingPageStatic :global(.calendar-real-grid) {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
@@ -300,7 +300,7 @@
 		min-height: 0;
 	}
 
-	/* Monthly grid — 7 columns, scrollable on mobile too */
+	/* Monthly grid - 7 columns, scrollable on mobile too */
 	.bookingPageStatic :global(.calendar-real-grid) {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);

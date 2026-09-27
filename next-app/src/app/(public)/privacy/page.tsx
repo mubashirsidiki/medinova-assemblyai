@@ -32,7 +32,7 @@ export default function PrivacyPage() {
 
 				<h2>2. How we use it</h2>
 				<p>
-					All data is used exclusively for delivering the Medinova service —
+					All data is used exclusively for delivering the Medinova service - 
 					routing calls, booking appointments, generating analytics, and
 					improving voice recognition accuracy. We do not sell or share data
 					with third parties.

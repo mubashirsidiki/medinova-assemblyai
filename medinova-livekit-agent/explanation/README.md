@@ -1,4 +1,4 @@
-# Medinova LiveKit Voice Agent — System Knowledge Base
+# Medinova LiveKit Voice Agent - System Knowledge Base
 
 This directory contains persistent, comprehensive technical documentation for the `medinova-livekit-agent` Python service. It explains how the voice worker interfaces with LiveKit Cloud, streams audio with AssemblyAI STT, OpenAI LLM, and Inworld TTS, classifies patient calls, and syncs data with MongoDB and the Next.js clinical dashboard.
 

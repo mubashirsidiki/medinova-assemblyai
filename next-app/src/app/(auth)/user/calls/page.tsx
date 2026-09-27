@@ -44,7 +44,7 @@ export default async function CallsPage({ searchParams }: CallsPageProps) {
 		<div className={`screen-grid ${styles.callsPageStatic}`}>
 			<PageHeader
 				title="Call Classification"
-				subtitle="Full classification data for every call — caller details, intent, urgency, spam detection, recommended actions, and transcript."
+				subtitle="Full classification data for every call - caller details, intent, urgency, spam detection, recommended actions, and transcript."
 			/>
 
 			<div className="kpi-grid">
